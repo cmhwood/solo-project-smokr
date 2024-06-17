@@ -17,6 +17,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import FeedPage from '../FeedPage/FeedPage';
 
 import './App.css';
+import CooksPage from '../CooksPage/CooksPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -62,6 +63,14 @@ function App() {
             path='/feed'
           >
             <FeedPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path='/cooks'
+          >
+            <CooksPage />
           </ProtectedRoute>
 
           <ProtectedRoute

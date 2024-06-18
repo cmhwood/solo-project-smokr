@@ -15,9 +15,9 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import FeedPage from '../FeedPage/FeedPage';
+import CooksPage from '../CooksPage/CooksPage';
 
 import './App.css';
-import CooksPage from '../CooksPage/CooksPage';
 
 function App() {
   const dispatch = useDispatch();

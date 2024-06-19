@@ -32,12 +32,11 @@ router.get('/', (req, res) => {
     });
 });
 
-//  ORDER BY "created_at" DESC;
 module.exports = router;
 
 // SELECT *
-//     FROM "cooks"
-//     ORDER BY "created_at" DESC;
+// FROM "cooks"
+// ORDER BY "created_at" DESC;
 
 // This is the sql from the cooks router. Need to remove WHERE cooks.user_id = $1
 // SELECT

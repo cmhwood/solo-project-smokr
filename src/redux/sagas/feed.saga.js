@@ -4,7 +4,7 @@ import axios from 'axios';
 function* fetchCooks() {
   try {
     const response = yield axios.get('/api/feed');
-    yield put({ type: 'SET_COOKS', payload: response.data });
+    yield put({ type: 'SET_ALL_COOKS', payload: response.data });
   } catch (error) {
     console.error('Error getting cooks');
   }

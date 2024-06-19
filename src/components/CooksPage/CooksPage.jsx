@@ -16,7 +16,8 @@ function CooksPage() {
       <div>
         {cooks?.map((cook) => (
           <div key={cook.id} className='cook'>
-            <img src={cook.profile_image_url} alt='Profile' style={{ maxWidth: '100px' }} />
+            {/* Not showing profile pic on cooks page */}
+            {/* <img src={cook.profile_image_url} alt='Profile' style={{ maxWidth: '100px' }} /> */}
             <p>
               <strong>Cook Name:</strong> {cook.cook_name}
             </p>
@@ -25,12 +26,6 @@ function CooksPage() {
             </p>
             <p>
               <strong>Location:</strong> {cook.location}
-            </p>
-            <p>
-              <strong>Recipe Notes:</strong> {cook.recipe_notes}
-            </p>
-            <p>
-              <strong>Cook Rating:</strong> {cook.cook_rating}
             </p>
             <div>
               <strong>Cook Images:</strong>
@@ -43,6 +38,12 @@ function CooksPage() {
                 />
               ))}
             </div>
+            <p>
+              <strong>Recipe Notes:</strong> {cook.recipe_notes}
+            </p>
+            <p>
+              <strong>Cook Rating:</strong> {cook.cook_rating}
+            </p>
           </div>
         ))}
       </div>

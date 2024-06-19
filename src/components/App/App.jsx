@@ -16,6 +16,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import FeedPage from '../FeedPage/FeedPage';
 import CooksPage from '../CooksPage/CooksPage';
+import AddCook from '../AddCook/AddCook';
 
 import './App.css';
 
@@ -71,6 +72,14 @@ function App() {
             path='/cooks'
           >
             <CooksPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Cooks else shows LoginPage
+            exact
+            path='/cooks/new'
+          >
+            <AddCook />
           </ProtectedRoute>
 
           <ProtectedRoute

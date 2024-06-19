@@ -24,12 +24,20 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
+            <Link className='navLink' to='/user'>
+              Profile
+            </Link>
+
             <Link className='navLink' to='/feed'>
               Feed
             </Link>
 
             <Link className='navLink' to='/cooks'>
               Cooks
+            </Link>
+
+            <Link className='navLink' to='/cooks/new'>
+              Add Cook
             </Link>
 
             <Link className='navLink' to='/info'>

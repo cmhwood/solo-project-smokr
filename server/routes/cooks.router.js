@@ -16,8 +16,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // This route *should* return the logged in users cooks
-// GET route to fetch cooks with associated user profile image
-
 router.get('/', rejectUnauthenticated, async (req, res) => {
   const queryText = `
     SELECT
@@ -47,15 +45,15 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 
 // This route *should* add a cook for the logged in user
 router.post('/', rejectUnauthenticated, async (req, res) => {
-  console.log(
-    '/cook POST route',
-    'Request Body:',
-    req.body,
-    'Is authenticated?',
-    req.isAuthenticated(),
-    'User:',
-    req.user
-  );
+  // console.log(
+  //   '/cook POST route',
+  //   'Request Body:',
+  //   req.body,
+  //   'Is authenticated?',
+  //   req.isAuthenticated(),
+  //   'User:',
+  //   req.user
+  // );
 
   try {
     await pool.query('BEGIN');
@@ -71,12 +69,12 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
     );
 
     const newCookId = insertCookResult.rows[0].id;
-    console.log('New Cook ID:', newCookId);
+    // console.log('New Cook ID:', newCookId);
 
     if (Array.isArray(cook_image_urls) && cook_image_urls.length > 0) {
       for (let index = 0; index < cook_image_urls.length; index++) {
         const imageUrl = cook_image_urls[index];
-        console.log(`Inserting image ${index + 1}:`, imageUrl);
+        // console.log(`Inserting image ${index + 1}:`, imageUrl);
 
         await pool.query(`INSERT INTO "cook_images" ("cook_id", "image_url") VALUES ($1, $2);`, [
           newCookId,
@@ -88,7 +86,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
     }
 
     await pool.query('COMMIT');
-    console.log('Transaction committed successfully');
+    // console.log('Transaction committed successfully');
 
     res.sendStatus(201);
   } catch (error) {
@@ -97,64 +95,6 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-// router.post('/', rejectUnauthenticated, async (req, res) => {
-//   console.log(
-//     '/cook POST route',
-//     'Request Body:',
-//     req.body,
-//     'Is authenticated?',
-//     req.isAuthenticated(),
-//     'User:',
-//     req.user
-//   );
-
-//   try {
-//     await pool.query('BEGIN');
-//     console.log('Transaction started');
-
-//     const { cook_name, cook_date, location, recipe_notes, cook_rating, cook_image_urls } = req.body;
-//     const userId = req.user.id;
-
-//     const insertCookResult = await pool.query(
-//       `INSERT INTO "cooks" ("cook_name", "user_id", "cook_date", "location", "recipe_notes", "cook_rating")
-//        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`,
-//       [cook_name, userId, cook_date, location, recipe_notes, cook_rating]
-//     );
-
-//     const newCookId = insertCookResult.rows[0].id;
-//     console.log('New Cook ID:', newCookId);
-
-//     await pool.query('COMMIT');
-//     console.log('Transaction committed successfully');
-
-//     if (Array.isArray(cook_image_urls) && cook_image_urls.length > 0) {
-//       await pool.query('BEGIN');
-//       console.log('Transaction started for cook images');
-
-//       for (let index = 0; index < cook_image_urls.length; index++) {
-//         const imageUrl = cook_image_urls[index];
-//         console.log(`Inserting image ${index + 1}:`, imageUrl);
-
-//         await pool.query(`INSERT INTO "cook_images" ("cook_id", "image_url") VALUES ($1, $2);`, [
-//           newCookId,
-//           imageUrl,
-//         ]);
-//       }
-
-//       await pool.query('COMMIT');
-//       console.log('Transaction committed successfully for cook images');
-//     } else {
-//       console.log('No cook images provided or not an array.');
-//     }
-
-//     res.sendStatus(201);
-//   } catch (error) {
-//     await pool.query('ROLLBACK');
-//     console.error('Error executing query', error);
-//     res.sendStatus(500);
-//   }
-// });
 
 router.put('/:id', rejectUnauthenticated, async (req, res) => {
   const cookId = req.params.id;
@@ -170,7 +110,7 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
   try {
     // Start a transaction
     await pool.query('BEGIN');
-    console.log('Transaction started');
+    // console.log('Transaction started');
 
     // Update cook information
     const updateCookQuery = `
@@ -208,21 +148,21 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
     if (Array.isArray(cook_image_urls) && cook_image_urls.length > 0) {
       for (let i = 0; i < cook_image_urls.length; i++) {
         const imageUrl = cook_image_urls[i];
-        console.log(`Inserting new image ${i + 1}:`, imageUrl);
+        // console.log(`Inserting new image ${i + 1}:`, imageUrl);
         await pool.query(
           `INSERT INTO "cook_images" ("cook_id", "image_url")
            VALUES ($1, $2);`,
           [cookId, imageUrl]
         );
       }
-      console.log('All new cook images inserted successfully');
+      // console.log('All new cook images inserted successfully');
     } else {
       console.log('No new cook images provided or not an array.');
     }
 
     // Commit the transaction
     await pool.query('COMMIT');
-    console.log('Transaction committed successfully');
+    // console.log('Transaction committed successfully');
     res.sendStatus(200);
   } catch (error) {
     // Roll back transaction in case of error

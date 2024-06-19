@@ -21,13 +21,21 @@ CREATE TABLE "cooks" (
 	"id" SERIAL PRIMARY KEY,
 	"cook_name" VARCHAR(100) NOT NULL,
 	"user_id" INTEGER NOT NULL REFERENCES "user" ("id"),
-	"cook_image_urls" JSONB,
 	"cook_date" TIMESTAMP,
 	"location" VARCHAR(255),
 	"recipe_notes" TEXT,
 	"cook_rating" INTEGER,
 	"created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE cook_images (
+    id SERIAL PRIMARY KEY,
+    cook_id INTEGER NOT NULL REFERENCES cooks(id),
+    image_url TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+SELECT * FROM cook_images;
 
 
 INSERT INTO cooks (cook_name, user_id, cook_date, location, recipe_notes, cook_rating)
@@ -65,15 +73,7 @@ VALUES (
     4                                       -- cook_rating
 );
 
-CREATE TABLE cook_images (
-    id SERIAL PRIMARY KEY,
-    cook_id INTEGER NOT NULL REFERENCES cooks(id),
-    image_url TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
-
-SELECT * FROM cook_images;
 
 -- Inserting a cook
 INSERT INTO cooks (cook_name, user_id, cook_date, location, recipe_notes, cook_rating)

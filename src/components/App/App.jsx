@@ -50,13 +50,6 @@ function App() {
             Visiting localhost:5173/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:5173/user */}
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path='/user'
-          >
-            <UserPage />
-          </ProtectedRoute>
 
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
@@ -72,6 +65,14 @@ function App() {
             path='/cooks'
           >
             <CooksPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path='/user'
+          >
+            <UserPage />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -94,7 +95,7 @@ function App() {
             {user.id ? (
               // If the user is already logged in,
               // redirect to the /user page
-              <Redirect to='/user' />
+              <Redirect to='/feed' />
             ) : (
               // Otherwise, show the login page
               <LoginPage />

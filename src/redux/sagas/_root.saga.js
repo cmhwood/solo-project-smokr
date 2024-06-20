@@ -4,6 +4,7 @@ import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import cooksSaga from './cooks.saga';
 import feedSaga from './feed.saga';
+import cookDetailSaga from './cookDetail.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     userSaga(),
     cooksSaga(),
     feedSaga(),
+    cookDetailSaga(),
   ]);
 }

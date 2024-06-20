@@ -191,4 +191,36 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// GET route for fetching a specific cook by ID
+router.get('/:id', (req, res) => {
+  const cookId = req.params.id;
+  const query = `
+    SELECT
+      cooks.id,
+      cooks.cook_name,
+      cooks.cook_date,
+      cooks.location,
+      cooks.recipe_notes,
+      cooks.cook_rating,
+      users.profile_image_url,
+      array_agg(cook_images.image_url) AS cook_images
+    FROM "cooks"
+    JOIN "user" AS users ON cooks.user_id = users.id
+    LEFT JOIN "cook_images" ON cooks.id = cook_images.cook_id
+    WHERE cooks.id = $1
+    GROUP BY cooks.id, users.id;
+  `;
+  pool
+    .query(query, [cookId])
+    .then((result) => {
+      res.send(result.rows[0]); // Send the first (and only) result
+    })
+    .catch((err) => {
+      console.log('ERROR: Get cook by ID', err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
+
+// SELECT * FROM cooks WHERE id = $1

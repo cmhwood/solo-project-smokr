@@ -41,7 +41,11 @@ function CookDetails() {
     }
   };
 
-  const handleUpdateCook = async () => {};
+  const handleUpdateCook = async () => {
+    console.log('form data', formData);
+    await axios.put(`/api/cooks/${cookId}`, formData);
+    setEditMode(false);
+  };
 
   const handleDeleteCook = async () => {};
 

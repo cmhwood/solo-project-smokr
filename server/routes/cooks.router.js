@@ -97,7 +97,9 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 });
 
 router.put('/:id', rejectUnauthenticated, async (req, res) => {
-  const cookId = req.params.id;
+  console.log('editing cook', req.body);
+  const cookId = Number(req.params.id);
+  console.log(cookId);
   const {
     cook_name,
     cook_date,
@@ -105,7 +107,7 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
     recipe_notes,
     cook_rating,
     cook_image_urls,
-    is_active, // New field to handle soft delete
+    // is_active,  New field to handle soft delete
   } = req.body;
 
   try {
@@ -120,10 +122,9 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
         "cook_date" = $2,
         "location" = $3,
         "recipe_notes" = $4,
-        "cook_rating" = $5,
-        "is_active" = $6
+        "cook_rating" = $5
       WHERE
-        "id" = $7 AND "user_id" = $8;
+        "id" = $6;
     `;
     await pool.query(updateCookQuery, [
       cook_name,
@@ -132,7 +133,6 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
       recipe_notes,
       cook_rating,
       cookId,
-      req.user.id,
     ]);
 
     console.log('Cook information updated successfully');

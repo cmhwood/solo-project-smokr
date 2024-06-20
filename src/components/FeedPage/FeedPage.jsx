@@ -6,6 +6,7 @@ function FeedPage() {
   const dispatch = useDispatch();
   const feeds = useSelector((store) => store.feedReducer);
   const history = useHistory();
+  const cookRatings = useSelector((store) => store.cookRatings);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_COOKS' });
@@ -50,10 +51,15 @@ function FeedPage() {
             </div>
             {/* <p>
               <strong>Recipe Notes:</strong> {cook.recipe_notes}
-            </p>
+            </p> 
+            */}
             <p>
               <strong>Cook Rating:</strong> {cook.cook_rating}
-            </p> */}
+              {/* Rating:
+              {cookRatings?.map((rating, i) => (
+                <li key={i}>{rating.cook_rating}</li>
+              ))} */}
+            </p>
           </div>
         ))}
       </div>

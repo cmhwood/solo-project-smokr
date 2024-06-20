@@ -9,6 +9,11 @@ CREATE TABLE "user" (
     "is_active" BOOLEAN NOT NULL DEFAULT 'TRUE'
 );
 
+CREATE TABLE "cook_rating" (
+  "id" SERIAL PRIMARY KEY,
+  "rating" VARCHAR(80) NOT NULL
+);
+
 SELECT * FROM "user";
 
 --INSERT INTO "user" ("username", "password", "image_url")
@@ -24,8 +29,9 @@ CREATE TABLE "cooks" (
 	"cook_date" TIMESTAMP,
 	"location" VARCHAR(255),
 	"recipe_notes" TEXT,
-	"cook_rating" INTEGER,
-	"created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	"cook_rating" INTEGER REFERENCES "cook_rating" ("id"),
+	"created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	"is_active" BOOLEAN NOT NULL DEFAULT 'TRUE'
 );
 
 CREATE TABLE cook_images (

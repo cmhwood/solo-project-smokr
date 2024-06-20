@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
@@ -9,8 +9,22 @@ const AddCookForm = () => {
   const [recipeNotes, setRecipeNotes] = useState('');
   const [cookRating, setCookRating] = useState('');
   const [imageURLs, setImageURLs] = useState(['']);
-  const [userId] = useState(1); // Assume this is fetched from user context or auth
+  const [ratingOptions, setRatingOptions] = useState([]);
   const history = useHistory();
+
+  useEffect(() => {
+    // Fetch rating options from the database
+    const fetchRatings = async () => {
+      try {
+        const response = await axios.get('/api/ratings');
+        setRatingOptions(response.data);
+      } catch (error) {
+        console.error('Error fetching ratings', error);
+      }
+    };
+
+    fetchRatings();
+  }, []);
 
   const handleImageChange = (index, value) => {
     const newImageURLs = [...imageURLs];
@@ -83,14 +97,14 @@ const AddCookForm = () => {
       </div>
       <div>
         <label>Cook Rating:</label>
-        <input
-          type='number'
-          value={cookRating}
-          onChange={(e) => setCookRating(e.target.value)}
-          min='1'
-          max='5'
-          required
-        />
+        <select value={cookRating} onChange={(e) => setCookRating(e.target.value)} required>
+          <option value=''>Select Rating</option>
+          {ratingOptions.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.rating}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <label>Image URLs:</label>

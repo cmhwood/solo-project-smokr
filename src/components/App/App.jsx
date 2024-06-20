@@ -90,6 +90,7 @@ function App() {
           </Route>
         </Switch>
         {/* <Footer /> */}
+        <br/>
       </div>
     </Router>
   );

@@ -31,6 +31,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
     FROM "cooks"
     JOIN "user" AS users ON cooks.user_id = users.id
     LEFT JOIN "cook_images" ON cooks.id = cook_images.cook_id
+    LEFT JOIN "cook_rating" ON cooks.cook_rating = cook_rating.id
     WHERE cooks.user_id = $1 AND cooks.is_active = TRUE
     GROUP BY cooks.id, users.id
     ORDER BY cooks.created_at DESC;`;
@@ -46,16 +47,6 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 
 // This route *should* add a cook for the logged in user
 router.post('/', rejectUnauthenticated, async (req, res) => {
-  // console.log(
-  //   '/cook POST route',
-  //   'Request Body:',
-  //   req.body,
-  //   'Is authenticated?',
-  //   req.isAuthenticated(),
-  //   'User:',
-  //   req.user
-  // );
-
   try {
     await pool.query('BEGIN');
     console.log('Transaction started');
@@ -70,12 +61,10 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
     );
 
     const newCookId = insertCookResult.rows[0].id;
-    // console.log('New Cook ID:', newCookId);
 
     if (Array.isArray(cook_image_urls) && cook_image_urls.length > 0) {
       for (let index = 0; index < cook_image_urls.length; index++) {
         const imageUrl = cook_image_urls[index];
-        // console.log(`Inserting image ${index + 1}:`, imageUrl);
 
         await pool.query(`INSERT INTO "cook_images" ("cook_id", "image_url") VALUES ($1, $2);`, [
           newCookId,
@@ -87,7 +76,6 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
     }
 
     await pool.query('COMMIT');
-    // console.log('Transaction committed successfully');
 
     res.sendStatus(201);
   } catch (error) {
@@ -197,34 +185,28 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 });
 
 // GET route for fetching a specific cook by ID
-router.get('/:id', (req, res) => {
+// In your cook router (cook.router.js)
+router.get('/:id', async (req, res) => {
   const cookId = req.params.id;
   const query = `
-    SELECT
-      cooks.id,
-      cooks.cook_name,
-      cooks.cook_date,
-      cooks.location,
-      cooks.recipe_notes,
-      cooks.cook_rating,
-      users.profile_image_url,
-      cooks.user_id,
-      array_agg(cook_images.image_url) AS cook_images
-    FROM "cooks"
-    JOIN "user" AS users ON cooks.user_id = users.id
-    LEFT JOIN "cook_images" ON cooks.id = cook_images.cook_id
+    SELECT 
+      cooks.*, 
+      array_agg(cook_images.image_url) AS cook_images, 
+      cook_rating.rating AS cook_rating_text
+    FROM cooks
+    LEFT JOIN cook_images ON cooks.id = cook_images.cook_id
+    JOIN cook_rating ON cooks.cook_rating = cook_rating.id
     WHERE cooks.id = $1
-    GROUP BY cooks.id, users.id;
+    GROUP BY cooks.id, cook_rating.rating;
   `;
-  pool
-    .query(query, [cookId])
-    .then((result) => {
-      res.send(result.rows[0]); // Send the first (and only) result
-    })
-    .catch((err) => {
-      console.log('ERROR: Get cook by ID', err);
-      res.sendStatus(500);
-    });
+
+  try {
+    const result = await pool.query(query, [cookId]);
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetching cook details:', error);
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;

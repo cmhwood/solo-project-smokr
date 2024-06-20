@@ -5,7 +5,6 @@ import axios from 'axios';
 
 function CookDetails() {
   const user = useSelector((store) => store.user);
-  console.log('who am i', user);
   const { cookId } = useParams(); // Get cookId from URL params
   const dispatch = useDispatch();
   const history = useHistory();
@@ -16,6 +15,7 @@ function CookDetails() {
     location: '',
     recipe_notes: '',
     cook_rating: 0,
+    cook_rating_text: '',
     is_active: true,
     cook_image_urls: [],
   });
@@ -27,7 +27,6 @@ function CookDetails() {
   const fetchCookDetails = async () => {
     try {
       const response = await axios.get(`/api/cooks/${cookId}`);
-      console.log('COOK DATA', response.data);
       const {
         user_id,
         cook_name,
@@ -35,6 +34,7 @@ function CookDetails() {
         location,
         recipe_notes,
         cook_rating,
+        cook_rating_text,
         is_active,
         cook_images,
       } = response.data;
@@ -45,6 +45,7 @@ function CookDetails() {
         location,
         recipe_notes,
         cook_rating,
+        cook_rating_text,
         is_active,
         cook_image_urls: cook_images || [],
       });
@@ -54,14 +55,12 @@ function CookDetails() {
   };
 
   const handleUpdateCook = async () => {
-    console.log('form data', formData);
     await axios.put(`/api/cooks/${cookId}`, formData);
     setEditMode(false);
   };
 
   const handleDeleteCook = async () => {
-    const softDelete = { ...formData };
-    softDelete.is_active = false;
+    const softDelete = { ...formData, is_active: false };
     await axios.put(`/api/cooks/${cookId}`, softDelete);
     history.push('/cooks');
   };
@@ -81,7 +80,6 @@ function CookDetails() {
     <div className='cook-details'>
       {editMode ? (
         <div className='edit-form'>
-          {/* Input fields for editing */}
           <input
             type='text'
             name='cook_name'
@@ -105,29 +103,26 @@ function CookDetails() {
             value={formData.recipe_notes}
             onChange={handleFormDataChange}
           ></textarea>
-          <input
-            type='number'
-            name='cook_rating'
-            value={formData.cook_rating}
-            onChange={handleFormDataChange}
-          />
-          {/* Save and Cancel buttons */}
+          <select name='cook_rating' value={formData.cook_rating} onChange={handleFormDataChange}>
+            <option value='1'>⭐️</option>
+            <option value='2'>⭐️⭐️</option>
+            <option value='3'>⭐️⭐️⭐️</option>
+            <option value='4'>⭐️⭐️⭐️⭐️</option>
+            <option value='5'>⭐️⭐️⭐️⭐️⭐️</option>
+          </select>
           <button onClick={handleUpdateCook}>Save</button>
           <button onClick={handleEditToggle}>Cancel</button>
         </div>
       ) : (
         <div className='view-details'>
-          {/* Display cook details */}
           <h2>{formData.cook_name}</h2>
           <p>Cook Date: {formData.cook_date}</p>
           <p>Location: {formData.location}</p>
           <p>Recipe Notes: {formData.recipe_notes}</p>
-          <p>Cook Rating: {formData.cook_rating}</p>
-          {/* Display cook images */}
+          <p>Cook Rating: {formData.cook_rating_text}</p>
           {formData.cook_image_urls.map((url, index) => (
             <img key={index} src={url} alt={`Cook Image ${index}`} style={{ maxWidth: '100px' }} />
           ))}
-          {/* Edit and Delete buttons */}
           {user.id === formData.user_id && (
             <>
               <button onClick={handleEditToggle}>Edit</button>

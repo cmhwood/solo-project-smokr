@@ -21,7 +21,7 @@ function FeedPage() {
       <div>
         {feeds?.map((cook) => (
           <div key={cook.id} className='cook'>
-            <img src={cook.profile_image_url} alt='Profile' style={{ maxWidth: '100px' }} />
+            <img src={cook.profile_image_url} alt='Profile' style={{ maxWidth: '32px' }} />
             <p>
               <strong>Cook Name: </strong>
               <span

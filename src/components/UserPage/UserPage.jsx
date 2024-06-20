@@ -35,8 +35,8 @@ function UserPage() {
             'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg'
           } // Use the same generic image URL here
           alt='Profile'
-          width='100'
-          height='100'
+          width='64'
+          height='64'
         />
         <div>
           <input

@@ -69,12 +69,12 @@ router.post('/logout', (req, res, next) => {
 // Handles updating profile image URL
 router.put('/profile-image', rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
-  const { profile_image_url } = req.body;
+  // const { profile_image_url } = req.body;
 
   const queryText = `UPDATE "user" SET "profile_image_url" = $1 WHERE "id" = $2`;
 
   pool
-    .query(queryText, [profile_image_url, userId])
+    .query(queryText, [req.body.profile_image_url, userId])
     .then(() => res.sendStatus(200))
     .catch((err) => {
       console.log('Error updating profile image:', err);

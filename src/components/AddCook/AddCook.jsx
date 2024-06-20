@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const AddCookForm = () => {
   const [cookName, setCookName] = useState('');
@@ -9,6 +10,7 @@ const AddCookForm = () => {
   const [cookRating, setCookRating] = useState('');
   const [imageURLs, setImageURLs] = useState(['']);
   const [userId] = useState(1); // Assume this is fetched from user context or auth
+  const history = useHistory();
 
   const handleImageChange = (index, value) => {
     const newImageURLs = [...imageURLs];
@@ -43,6 +45,7 @@ const AddCookForm = () => {
     } catch (error) {
       console.error(error);
     }
+    history.push('/cooks');
   };
 
   return (

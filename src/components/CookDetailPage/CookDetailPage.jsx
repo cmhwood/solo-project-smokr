@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 function CookDetails() {
+  const user = useSelector((store) => store.user);
+  console.log('who am i', user);
   const { cookId } = useParams(); // Get cookId from URL params
   const dispatch = useDispatch();
   const history = useHistory();
@@ -25,9 +27,19 @@ function CookDetails() {
   const fetchCookDetails = async () => {
     try {
       const response = await axios.get(`/api/cooks/${cookId}`);
-      const { cook_name, cook_date, location, recipe_notes, cook_rating, is_active, cook_images } =
-        response.data;
+      console.log('COOK DATA', response.data);
+      const {
+        user_id,
+        cook_name,
+        cook_date,
+        location,
+        recipe_notes,
+        cook_rating,
+        is_active,
+        cook_images,
+      } = response.data;
       setFormData({
+        user_id,
         cook_name,
         cook_date,
         location,
@@ -116,8 +128,12 @@ function CookDetails() {
             <img key={index} src={url} alt={`Cook Image ${index}`} style={{ maxWidth: '100px' }} />
           ))}
           {/* Edit and Delete buttons */}
-          <button onClick={handleEditToggle}>Edit</button>
-          <button onClick={handleDeleteCook}>Delete</button>
+          {user.id === formData.user_id && (
+            <>
+              <button onClick={handleEditToggle}>Edit</button>
+              <button onClick={handleDeleteCook}>Delete</button>
+            </>
+          )}
         </div>
       )}
     </div>

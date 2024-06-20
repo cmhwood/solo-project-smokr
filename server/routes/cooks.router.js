@@ -26,6 +26,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
       cooks.recipe_notes,
       cooks.cook_rating,
       users.profile_image_url,
+      cooks.user_id,
       array_agg(cook_images.image_url) AS cook_images
     FROM "cooks"
     JOIN "user" AS users ON cooks.user_id = users.id
@@ -207,6 +208,7 @@ router.get('/:id', (req, res) => {
       cooks.recipe_notes,
       cooks.cook_rating,
       users.profile_image_url,
+      cooks.user_id,
       array_agg(cook_images.image_url) AS cook_images
     FROM "cooks"
     JOIN "user" AS users ON cooks.user_id = users.id

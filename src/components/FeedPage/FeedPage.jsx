@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function FeedPage() {
   const dispatch = useDispatch();
   const feeds = useSelector((store) => store.feedReducer);
+  const history = useHistory();
 
   useEffect(() => {
     dispatch({ type: 'FETCH_COOKS' });
   }, [dispatch]);
+
+  const handleCookClick = (cookId) => {
+    history.push(`/cook/${cookId}`);
+  };
 
   return (
     <div className='container'>
@@ -17,11 +23,17 @@ function FeedPage() {
           <div key={cook.id} className='cook'>
             <img src={cook.profile_image_url} alt='Profile' style={{ maxWidth: '100px' }} />
             <p>
-              <strong>Cook Name:</strong> {cook.cook_name}
+              <strong>Cook Name: </strong>
+              <span
+                style={{ cursor: 'pointer', color: 'blue' }}
+                onClick={() => handleCookClick(cook.id)}
+              >
+                {cook.cook_name}
+              </span>
             </p>
-            <p>
+            {/* <p>
               <strong>Cook Date:</strong> {cook.cook_date}
-            </p>
+            </p> */}
             <p>
               <strong>Location:</strong> {cook.location}
             </p>
@@ -36,12 +48,12 @@ function FeedPage() {
                 />
               ))}
             </div>
-            <p>
+            {/* <p>
               <strong>Recipe Notes:</strong> {cook.recipe_notes}
             </p>
             <p>
               <strong>Cook Rating:</strong> {cook.cook_rating}
-            </p>
+            </p> */}
           </div>
         ))}
       </div>

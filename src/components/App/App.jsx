@@ -17,6 +17,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import FeedPage from '../FeedPage/FeedPage';
 import CooksPage from '../CooksPage/CooksPage';
 import AddCook from '../AddCook/AddCook';
+import CookDetailPage from '../CookDetailPage/CookDetailPage';
 
 import './App.css';
 
@@ -38,11 +39,7 @@ function App() {
           <Redirect exact from='/' to='/home' />
 
           {/* Visiting localhost:5173/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path='/about'
-          >
+          <Route exact path='/about'>
             <AboutPage />
           </Route>
 
@@ -51,78 +48,40 @@ function App() {
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:5173/user */}
 
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path='/feed'
-          >
+          <ProtectedRoute exact path='/feed'>
             <FeedPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path='/cooks'
-          >
+          <ProtectedRoute exact path='/cooks'>
             <CooksPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path='/user'
-          >
+          <ProtectedRoute exact path='/user'>
             <UserPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows Cooks else shows LoginPage
-            exact
-            path='/cooks/new'
-          >
+          <ProtectedRoute exact path='/cooks/new'>
             <AddCook />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path='/info'
-          >
+          <ProtectedRoute exact path='/info'>
             <InfoPage />
           </ProtectedRoute>
 
+          <ProtectedRoute exact path='/cook/:cookId'>
+            <CookDetailPage />
+          </ProtectedRoute>
+
           <Route exact path='/login'>
-            {user.id ? (
-              // If the user is already logged in,
-              // redirect to the /user page
-              <Redirect to='/feed' />
-            ) : (
-              // Otherwise, show the login page
-              <LoginPage />
-            )}
+            {user.id ? <Redirect to='/feed' /> : <LoginPage />}
           </Route>
 
           <Route exact path='/registration'>
-            {user.id ? (
-              // If the user is already logged in,
-              // redirect them to the /user page
-              <Redirect to='/user' />
-            ) : (
-              // Otherwise, show the registration page
-              <RegisterPage />
-            )}
+            {user.id ? <Redirect to='/user' /> : <RegisterPage />}
           </Route>
 
           <Route exact path='/home'>
-            {user.id ? (
-              // If the user is already logged in,
-              // redirect them to the /user page
-              <Redirect to='/feed' />
-            ) : (
-              // Otherwise, show the Landing page
-              <LandingPage />
-              // <LoginPage />
-            )}
+            {user.id ? <Redirect to='/feed' /> : <LandingPage />}
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
 
-// GETS all the cooks for the cook list
+// GETS all the cooks for the cook list that are active
 // GET route to fetch cooks with associated user profile image
 router.get('/', (req, res) => {
   const query = `
@@ -18,6 +18,7 @@ router.get('/', (req, res) => {
     FROM "cooks"
     JOIN "user" AS users ON cooks.user_id = users.id
     LEFT JOIN "cook_images" ON cooks.id = cook_images.cook_id
+    WHERE cooks.is_active = TRUE
     GROUP BY cooks.id, users.id
     ORDER BY cooks.created_at DESC;
   `;
@@ -27,10 +28,11 @@ router.get('/', (req, res) => {
       res.send(result.rows);
     })
     .catch((err) => {
-      console.log('ERROR: Get all cooks', err);
+      console.log('ERROR: Get all active cooks', err);
       res.sendStatus(500);
     });
 });
+
 
 module.exports = router;
 

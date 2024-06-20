@@ -30,7 +30,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
     FROM "cooks"
     JOIN "user" AS users ON cooks.user_id = users.id
     LEFT JOIN "cook_images" ON cooks.id = cook_images.cook_id
-    WHERE cooks.user_id = $1
+    WHERE cooks.user_id = $1 AND cooks.is_active = TRUE
     GROUP BY cooks.id, users.id
     ORDER BY cooks.created_at DESC;`;
 
@@ -104,7 +104,8 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
     location,
     recipe_notes,
     cook_rating,
-    cook_image_urls, // Assuming cook_image_urls is an array of new image URLs
+    cook_image_urls,
+    is_active, // New field to handle soft delete
   } = req.body;
 
   try {
@@ -112,7 +113,6 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
     await pool.query('BEGIN');
     // console.log('Transaction started');
 
-    // Update cook information
     const updateCookQuery = `
       UPDATE "cooks"
       SET
@@ -120,9 +120,10 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
         "cook_date" = $2,
         "location" = $3,
         "recipe_notes" = $4,
-        "cook_rating" = $5
+        "cook_rating" = $5,
+        "is_active" = $6
       WHERE
-        "id" = $6 AND "user_id" = $7;
+        "id" = $7 AND "user_id" = $8;
     `;
     await pool.query(updateCookQuery, [
       cook_name,

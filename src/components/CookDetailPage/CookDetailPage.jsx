@@ -1,49 +1,118 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-function CookDetailPage() {
-  const { cookId } = useParams();
+function CookDetails() {
+  const { cookId } = useParams(); // Get cookId from URL params
   const dispatch = useDispatch();
-  const cook = useSelector((state) => state.cookDetailReducer);
+  const history = useHistory();
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({
+    cook_name: '',
+    cook_date: '',
+    location: '',
+    recipe_notes: '',
+    cook_rating: 0,
+    is_active: true,
+    cook_image_urls: [],
+  });
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_COOK_DETAIL', payload: cookId });
-  }, [dispatch, cookId]);
+    fetchCookDetails();
+  }, []); // Fetch cook details on component mount
 
-  if (!cook) {
-    return <div>Loading...</div>;
-  }
+  const fetchCookDetails = async () => {
+    try {
+      const response = await axios.get(`/api/cooks/${cookId}`);
+      const { cook_name, cook_date, location, recipe_notes, cook_rating, is_active, cook_images } =
+        response.data;
+      setFormData({
+        cook_name,
+        cook_date,
+        location,
+        recipe_notes,
+        cook_rating,
+        is_active,
+        cook_image_urls: cook_images || [],
+      });
+    } catch (error) {
+      console.error('Error fetching cook details:', error);
+    }
+  };
+
+  const handleUpdateCook = async () => {};
+
+  const handleDeleteCook = async () => {};
+
+  const handleEditToggle = () => {
+    setEditMode(!editMode); // Toggle edit mode
+  };
+
+  const handleFormDataChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
-    <div className='container'>
-      <h2>Cook Details</h2>
-      <div className='cook-detail'>
-        <img src={cook.profile_image_url} alt='Profile' style={{ maxWidth: '100px' }} />
-        <p>
-          <strong>Cook Name:</strong> {cook.cook_name}
-        </p>
-        <p>
-          <strong>Cook Date:</strong> {cook.cook_date}
-        </p>
-        <p>
-          <strong>Location:</strong> {cook.location}
-        </p>
-        <div>
-          <strong>Cook Images:</strong>
-          {cook.cook_images?.map((url, index) => (
+    <div className='cook-details'>
+      {editMode ? (
+        <div className='edit-form'>
+          {/* Input fields for editing */}
+          <input
+            type='text'
+            name='cook_name'
+            value={formData.cook_name}
+            onChange={handleFormDataChange}
+          />
+          <input
+            type='date'
+            name='cook_date'
+            value={formData.cook_date}
+            onChange={handleFormDataChange}
+          />
+          <input
+            type='text'
+            name='location'
+            value={formData.location}
+            onChange={handleFormDataChange}
+          />
+          <textarea
+            name='recipe_notes'
+            value={formData.recipe_notes}
+            onChange={handleFormDataChange}
+          ></textarea>
+          <input
+            type='number'
+            name='cook_rating'
+            value={formData.cook_rating}
+            onChange={handleFormDataChange}
+          />
+          {/* Save and Cancel buttons */}
+          <button onClick={handleUpdateCook}>Save</button>
+          <button onClick={handleEditToggle}>Cancel</button>
+        </div>
+      ) : (
+        <div className='view-details'>
+          {/* Display cook details */}
+          <h2>{formData.cook_name}</h2>
+          <p>Cook Date: {formData.cook_date}</p>
+          <p>Location: {formData.location}</p>
+          <p>Recipe Notes: {formData.recipe_notes}</p>
+          <p>Cook Rating: {formData.cook_rating}</p>
+          {/* Display cook images */}
+          {formData.cook_image_urls.map((url, index) => (
             <img key={index} src={url} alt={`Cook Image ${index}`} style={{ maxWidth: '100px' }} />
           ))}
+          {/* Edit and Delete buttons */}
+          <button onClick={handleEditToggle}>Edit</button>
+          <button onClick={handleDeleteCook}>Delete</button>
         </div>
-        <p>
-          <strong>Recipe Notes:</strong> {cook.recipe_notes}
-        </p>
-        <p>
-          <strong>Cook Rating:</strong> {cook.cook_rating}
-        </p>
-      </div>
+      )}
     </div>
   );
 }
 
-export default CookDetailPage;
+export default CookDetails;

@@ -31,9 +31,9 @@ function FeedPage() {
                 {cook.cook_name}
               </span>
             </p>
-            <p>
+            {/* <p>
               <strong>Cook Date:</strong> {cook.cook_date}
-            </p>
+            </p> */}
             <p>
               <strong>Location:</strong> {cook.location}
             </p>
@@ -48,12 +48,12 @@ function FeedPage() {
                 />
               ))}
             </div>
-            <p>
+            {/* <p>
               <strong>Recipe Notes:</strong> {cook.recipe_notes}
             </p>
             <p>
               <strong>Cook Rating:</strong> {cook.cook_rating}
-            </p>
+            </p> */}
           </div>
         ))}
       </div>

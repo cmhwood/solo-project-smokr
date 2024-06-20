@@ -106,6 +106,7 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
     location,
     recipe_notes,
     cook_rating,
+    is_active,
     cook_image_urls,
     // is_active,  New field to handle soft delete
   } = req.body;
@@ -122,9 +123,10 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
         "cook_date" = $2,
         "location" = $3,
         "recipe_notes" = $4,
-        "cook_rating" = $5
+        "cook_rating" = $5,
+        "is_active" = $6
       WHERE
-        "id" = $6;
+        "id" = $7;
     `;
     await pool.query(updateCookQuery, [
       cook_name,
@@ -132,6 +134,7 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
       location,
       recipe_notes,
       cook_rating,
+      is_active,
       cookId,
     ]);
 

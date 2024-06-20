@@ -47,7 +47,12 @@ function CookDetails() {
     setEditMode(false);
   };
 
-  const handleDeleteCook = async () => {};
+  const handleDeleteCook = async () => {
+    const softDelete = { ...formData };
+    softDelete.is_active = false;
+    await axios.put(`/api/cooks/${cookId}`, softDelete);
+    history.push('/cooks');
+  };
 
   const handleEditToggle = () => {
     setEditMode(!editMode); // Toggle edit mode

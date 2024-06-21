@@ -86,25 +86,18 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 });
 
 router.put('/:id', rejectUnauthenticated, async (req, res) => {
-  console.log('editing cook', req.body);
+  console.log('Editing cook', req.body);
   const cookId = Number(req.params.id);
   console.log(cookId);
-  const {
-    cook_name,
-    cook_date,
-    location,
-    recipe_notes,
-    cook_rating,
-    is_active,
-    cook_image_urls,
-    // is_active,  New field to handle soft delete
-  } = req.body;
+
+  const { cook_name, cook_date, location, recipe_notes, cook_rating, is_active, cook_image_urls } =
+    req.body;
 
   try {
     // Start a transaction
     await pool.query('BEGIN');
-    // console.log('Transaction started');
 
+    // Update cook information
     const updateCookQuery = `
       UPDATE "cooks"
       SET
@@ -129,33 +122,41 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
 
     console.log('Cook information updated successfully');
 
-    // Delete existing cook images
-    // const deleteImagesQuery = `
-    //   DELETE FROM "cook_images"
-    //   WHERE "cook_id" = $1;
-    // `;
-    // await pool.query(deleteImagesQuery, [cookId]);
-    // console.log('Existing cook images deleted successfully');
+    // Retrieve existing images
+    const existingImagesQuery = `
+      SELECT "image_url"
+      FROM "cook_images"
+      WHERE "cook_id" = $1;
+    `;
+    const existingImagesResult = await pool.query(existingImagesQuery, [cookId]);
+    const existingImageUrls = existingImagesResult.rows.map((row) => row.image_url);
 
-    // Insert new cook images
-    if (Array.isArray(cook_image_urls) && cook_image_urls.length > 0) {
-      for (let i = 0; i < cook_image_urls.length; i++) {
-        const imageUrl = cook_image_urls[i];
-        // console.log(`Inserting new image ${i + 1}:`, imageUrl);
-        await pool.query(
-          `INSERT INTO "cook_images" ("cook_id", "image_url")
-           VALUES ($1, $2);`,
-          [cookId, imageUrl]
-        );
-      }
-      // console.log('All new cook images inserted successfully');
-    } else {
-      console.log('No new cook images provided or not an array.');
+    // Determine which images to delete and insert
+    const imagesToDelete = existingImageUrls.filter((url) => !cook_image_urls.includes(url));
+    const imagesToInsert = cook_image_urls.filter((url) => !existingImageUrls.includes(url));
+
+    // Delete images that are no longer in the new list
+    for (const imageUrl of imagesToDelete) {
+      const deleteImageQuery = `
+        DELETE FROM "cook_images"
+        WHERE "cook_id" = $1 AND "image_url" = $2;
+      `;
+      await pool.query(deleteImageQuery, [cookId, imageUrl]);
     }
+    console.log('Deleted images:', imagesToDelete);
+
+    // Insert new images that are not already in the database
+    for (const imageUrl of imagesToInsert) {
+      const insertImageQuery = `
+        INSERT INTO "cook_images" ("cook_id", "image_url")
+        VALUES ($1, $2);
+      `;
+      await pool.query(insertImageQuery, [cookId, imageUrl]);
+    }
+    console.log('Inserted images:', imagesToInsert);
 
     // Commit the transaction
     await pool.query('COMMIT');
-    // console.log('Transaction committed successfully');
     res.sendStatus(200);
   } catch (error) {
     // Roll back transaction in case of error

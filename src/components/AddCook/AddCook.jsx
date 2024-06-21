@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { useScript } from '../../hooks/useScript';
 
 const AddCookForm = () => {
   const [cookName, setCookName] = useState('');
@@ -8,7 +9,7 @@ const AddCookForm = () => {
   const [location, setLocation] = useState('');
   const [recipeNotes, setRecipeNotes] = useState('');
   const [cookRating, setCookRating] = useState('');
-  const [imageURLs, setImageURLs] = useState(['']);
+  const [imageURLs, setImageURLs] = useState([]);
   const [ratingOptions, setRatingOptions] = useState([]);
   const history = useHistory();
 
@@ -26,20 +27,42 @@ const AddCookForm = () => {
     fetchRatings();
   }, []);
 
-  const handleImageChange = (index, value) => {
-    const newImageURLs = [...imageURLs];
-    newImageURLs[index] = value;
-    setImageURLs(newImageURLs);
+  const openWidget = () => {
+    !!window.cloudinary &&
+      window.cloudinary
+        .createUploadWidget(
+          {
+            sources: ['local', 'url', 'camera'],
+            // cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
+            cloudName: 'ddlkh3gov',
+            // uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
+            uploadPreset: 'qaikv0iz',
+          },
+          (error, result) => {
+            if (!error && result && result.event === 'success') {
+              // When an upload is successful, save the uploaded URL to local state!
+              setImageURLs([...imageURLs, result.info.secure_url]);
+            }
+          }
+        )
+        .open();
   };
+  console.log('what are the images', imageURLs);
 
-  const addImageField = () => {
-    setImageURLs([...imageURLs, '']);
-  };
+  // const handleImageChange = (index, value) => {
+  //   const newImageURLs = [...imageURLs];
+  //   newImageURLs[index] = value;
+  //   setImageURLs(newImageURLs);
+  // };
 
-  const removeImageField = (index) => {
-    const newImageURLs = imageURLs.filter((_, i) => i !== index);
-    setImageURLs(newImageURLs);
-  };
+  // const addImageField = () => {
+  //   setImageURLs([...imageURLs, '']);
+  // };
+
+  // const removeImageField = (index) => {
+  //   const newImageURLs = imageURLs.filter((_, i) => i !== index);
+  //   setImageURLs(newImageURLs);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -107,7 +130,14 @@ const AddCookForm = () => {
         </select>
       </div>
       <div>
-        <label>Image URLs:</label>
+        <div>
+          <h2>Profile Image Upload</h2>
+          {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
+          <button type='button' onClick={openWidget}>
+            Pick File
+          </button>
+        </div>
+        {/* <label>Image URLs:</label>
         {imageURLs.map((url, index) => (
           <div key={index}>
             <input
@@ -122,7 +152,7 @@ const AddCookForm = () => {
         ))}
         <button type='button' onClick={addImageField}>
           Add Another Image
-        </button>
+        </button> */}
       </div>
       <button type='submit'>Submit</button>
     </form>

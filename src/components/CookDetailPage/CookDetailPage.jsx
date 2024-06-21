@@ -3,14 +3,16 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import './CookDetailPage.css';
+import { useScript } from '../../hooks/useScript';
 
 function CookDetails() {
   const user = useSelector((store) => store.user);
   const { cookId } = useParams(); // Get cookId from URL params
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const [imageURLs, setImageURLs] = useState([]);
   const [editMode, setEditMode] = useState(false);
+
   const [formData, setFormData] = useState({
     cook_name: '',
     cook_date: '',
@@ -22,9 +24,21 @@ function CookDetails() {
     cook_image_urls: [],
   });
 
+  // Load the Cloudinary script unconditionally
+  useScript('https://widget.cloudinary.com/v2.0/global/all.js');
+
   useEffect(() => {
     fetchCookDetails();
   }, []); // Fetch cook details on component mount
+
+  useEffect(() => {
+    if (editMode) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        cook_image_urls: imageURLs,
+      }));
+    }
+  }, [imageURLs, editMode]);
 
   const fetchCookDetails = async () => {
     try {
@@ -56,10 +70,33 @@ function CookDetails() {
     }
   };
 
+  const openWidget = () => {
+    if (window.cloudinary) {
+      window.cloudinary
+        .createUploadWidget(
+          {
+            sources: ['local', 'url', 'camera'],
+            cloudName: 'ddlkh3gov',
+            uploadPreset: 'qaikv0iz',
+            multiple: 'true',
+          },
+          (error, result) => {
+            if (!error && result && result.event === 'success') {
+              setImageURLs((prevImageURLs) => [...prevImageURLs, result.info.secure_url]);
+            }
+          }
+        )
+        .open();
+    }
+  };
+
   const handleUpdateCook = async () => {
     try {
-      await axios.put(`/api/cooks/${cookId}`, formData);
-      // Update formData with the latest data after successful update
+      const updatedFormData = {
+        ...formData,
+        cook_image_urls: imageURLs,
+      };
+      await axios.put(`/api/cooks/${cookId}`, updatedFormData);
       fetchCookDetails();
       setEditMode(false);
     } catch (error) {
@@ -110,11 +147,6 @@ function CookDetails() {
             value={formData.location}
             onChange={handleFormDataChange}
           />
-          <textarea
-            name='recipe_notes'
-            value={formData.recipe_notes}
-            onChange={handleFormDataChange}
-          ></textarea>
           <select name='cook_rating' value={formData.cook_rating} onChange={handleFormDataChange}>
             <option value='1'>🔥</option>
             <option value='2'>🔥🔥</option>
@@ -122,6 +154,30 @@ function CookDetails() {
             <option value='4'>🔥🔥🔥🔥</option>
             <option value='5'>🔥🔥🔥🔥🔥</option>
           </select>
+          <textarea
+            name='recipe_notes'
+            value={formData.recipe_notes}
+            onChange={handleFormDataChange}
+          ></textarea>
+          <div>
+            {/* <h2>Image Upload</h2> */}
+            <button type='button' onClick={openWidget}>
+              Upload Images
+            </button>
+          </div>
+          <div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+              {imageURLs.map((url, index) => (
+                <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+                  <img
+                    src={url}
+                    alt={`Uploaded ${index}`}
+                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
           <button onClick={handleUpdateCook}>Save</button>
           <button onClick={handleEditToggle}>Cancel</button>
         </div>
@@ -133,9 +189,14 @@ function CookDetails() {
           <p>Recipe Notes: {formData.recipe_notes}</p>
           <p>Cook Rating: {formData.cook_rating_text}</p>
           <div>
-          {formData.cook_image_urls.map((url, index) => (
-            <img key={index} src={url} alt={`Cook Image ${index}`} style={{ maxWidth: '100px' }} />
-          ))}
+            {formData.cook_image_urls.map((url, index) => (
+              <img
+                key={index}
+                src={url}
+                alt={`Cook Image ${index}`}
+                style={{ maxWidth: '100px' }}
+              />
+            ))}
           </div>
           {user.id === formData.user_id && (
             <>

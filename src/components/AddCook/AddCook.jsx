@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { useScript } from '../../hooks/useScript';
 
 const AddCookForm = () => {
   const [cookName, setCookName] = useState('');
@@ -8,7 +9,7 @@ const AddCookForm = () => {
   const [location, setLocation] = useState('');
   const [recipeNotes, setRecipeNotes] = useState('');
   const [cookRating, setCookRating] = useState('');
-  const [imageURLs, setImageURLs] = useState(['']);
+  const [imageURLs, setImageURLs] = useState([]);
   const [ratingOptions, setRatingOptions] = useState([]);
   const history = useHistory();
 
@@ -26,20 +27,46 @@ const AddCookForm = () => {
     fetchRatings();
   }, []);
 
-  const handleImageChange = (index, value) => {
-    const newImageURLs = [...imageURLs];
-    newImageURLs[index] = value;
-    setImageURLs(newImageURLs);
+  const openWidget = () => {
+    !!window.cloudinary &&
+      window.cloudinary
+        .createUploadWidget(
+          {
+            sources: ['local', 'url', 'camera'],
+            // cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
+            cloudName: 'ddlkh3gov',
+            // uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
+            uploadPreset: 'qaikv0iz',
+            multiple: 'true',
+          },
+          (error, result) => {
+            if (!error && result && result.event === 'success') {
+              // When an upload is successful, save the uploaded URL to local state!
+              // setImageURLs([...imageURLs, result.info.secure_url]);
+              setImageURLs((prevImageURLs) => [...prevImageURLs, result.info.secure_url]);
+              // Holding on to the previously uploaded images in state with prevImageURLs
+            }
+          }
+        )
+        .open();
   };
+  console.log('what are the images', imageURLs);
 
-  const addImageField = () => {
-    setImageURLs([...imageURLs, '']);
-  };
+  // Fall back for adding images using the URL in the form field
+  // const handleImageChange = (index, value) => {
+  //   const newImageURLs = [...imageURLs];
+  //   newImageURLs[index] = value;
+  //   setImageURLs(newImageURLs);
+  // };
 
-  const removeImageField = (index) => {
-    const newImageURLs = imageURLs.filter((_, i) => i !== index);
-    setImageURLs(newImageURLs);
-  };
+  // const addImageField = () => {
+  //   setImageURLs([...imageURLs, '']);
+  // };
+
+  // const removeImageField = (index) => {
+  //   const newImageURLs = imageURLs.filter((_, i) => i !== index);
+  //   setImageURLs(newImageURLs);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,10 +119,6 @@ const AddCookForm = () => {
         />
       </div>
       <div>
-        <label>Recipe or Notes:</label>
-        <textarea value={recipeNotes} onChange={(e) => setRecipeNotes(e.target.value)} required />
-      </div>
-      <div>
         <label>Cook Rating:</label>
         <select value={cookRating} onChange={(e) => setCookRating(e.target.value)} required>
           <option value=''>Select Rating</option>
@@ -107,7 +130,33 @@ const AddCookForm = () => {
         </select>
       </div>
       <div>
-        <label>Image URLs:</label>
+        <label>Recipe or Notes:</label>
+        <textarea value={recipeNotes} onChange={(e) => setRecipeNotes(e.target.value)} required />
+      </div>
+      <div>
+        <div>
+          {/* <h2>Profile Image Upload</h2> */}
+          {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
+          <button type='button' onClick={openWidget}>
+            Upload Images
+          </button>
+        </div>
+        <div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            {imageURLs.map((url, index) => (
+              <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+                <img
+                  src={url}
+                  alt={`Uploaded ${index}`}
+                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        <button type='submit'>Submit</button>
+        {/* Fall back for adding images using the URL in the form field */}
+        {/* <label>Image URLs:</label>
         {imageURLs.map((url, index) => (
           <div key={index}>
             <input
@@ -122,9 +171,8 @@ const AddCookForm = () => {
         ))}
         <button type='button' onClick={addImageField}>
           Add Another Image
-        </button>
+        </button> */}
       </div>
-      <button type='submit'>Submit</button>
     </form>
   );
 };

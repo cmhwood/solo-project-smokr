@@ -38,6 +38,13 @@ function FeedPage() {
             <p>
               <strong>Location:</strong> {cook.location}
             </p>
+            <p>
+              <strong>Cook Rating:</strong> {cook.cook_rating}
+              {/* Rating:
+              {cookRatings?.map((rating, i) => (
+                <li key={i}>{rating.cook_rating}</li>
+              ))} */}
+            </p>
             <div>
               <strong>Cook Images:</strong>
               {cook.cook_images?.map((url, index) => (
@@ -53,13 +60,6 @@ function FeedPage() {
               <strong>Recipe Notes:</strong> {cook.recipe_notes}
             </p> 
             */}
-            <p>
-              <strong>Cook Rating:</strong> {cook.cook_rating}
-              {/* Rating:
-              {cookRatings?.map((rating, i) => (
-                <li key={i}>{rating.cook_rating}</li>
-              ))} */}
-            </p>
           </div>
         ))}
       </div>

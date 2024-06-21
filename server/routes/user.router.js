@@ -32,25 +32,6 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-// router.post('/register', (req, res, next) => {
-//   const username = req.body.username;
-//   const password = encryptLib.encryptPassword(req.body.password);
-
-//   const queryText = `INSERT INTO "user" (username, password)
-//     VALUES ($1, $2) RETURNING id`;
-//   pool
-//     .query(queryText, [username, password])
-//     .then(() => res.sendStatus(201))
-//     .catch((err) => {
-//       console.log('User registration failed: ', err);
-//       res.sendStatus(500);
-//     });
-// });
-
-// Handles login form authenticate/login POST
-// userStrategy.authenticate('local') is middleware that we run on this route
-// this middleware will run our POST if successful
-// this middleware will send a 404 if not successful
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
@@ -69,12 +50,13 @@ router.post('/logout', (req, res, next) => {
 // Handles updating profile image URL
 router.put('/profile-image', rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
-  // const { profile_image_url } = req.body;
+  const { profile_image_url } = req.body;
+  console.log('profile image url', profile_image_url);
 
   const queryText = `UPDATE "user" SET "profile_image_url" = $1 WHERE "id" = $2`;
 
   pool
-    .query(queryText, [req.body.profile_image_url, userId])
+    .query(queryText, [profile_image_url, userId])
     .then(() => res.sendStatus(200))
     .catch((err) => {
       console.log('Error updating profile image:', err);

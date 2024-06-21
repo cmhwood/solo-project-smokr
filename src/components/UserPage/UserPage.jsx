@@ -2,22 +2,47 @@ import React, { useState } from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { useScript } from '../../hooks/useScript';
 
 function UserPage() {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const [profileImageUrl, setProfileImageUrl] = useState(
-    user.profile_image_url || 'path/to/generic/profile/image.png'
-  );
-  const [newProfileImageUrl, setNewProfileImageUrl] = useState('');
+  const [newProfileImageUrl, setNewProfileImageUrl] = useState({
+    profile_image_url: user.profile_image_url || '',
+  });
 
-  const handleProfileImageUpdate = () => {
+  const openWidget = () => {
+    !!window.cloudinary &&
+      window.cloudinary
+        .createUploadWidget(
+          {
+            sources: ['local', 'url', 'camera'],
+            // cloudName: process.env.REACT_APP_CLOUDINARY_NAME,
+            cloudName: 'ddlkh3gov',
+            // uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
+            uploadPreset: 'qaikv0iz',
+          },
+          (error, result) => {
+            if (!error && result && result.event === 'success') {
+              // When an upload is successful, save the uploaded URL to local state!
+              setNewProfileImageUrl({
+                ...newProfileImageUrl,
+                profile_image_url: result.info.secure_url,
+              });
+            }
+          }
+        )
+        .open();
+  };
+
+  const handleProfileImageUpdate = (event) => {
+    event.preventDefault();
+
+    console.log('new profile image url', newProfileImageUrl.profile_image_url);
     axios
-      .put('/api/user/profile-image', { profile_image_url: newProfileImageUrl })
+      .put('/api/user/profile-image', newProfileImageUrl)
       .then((response) => {
-        dispatch({ type: 'SET_USER', payload: { ...user, profile_image_url: newProfileImageUrl } });
-        setProfileImageUrl(newProfileImageUrl);
-        setNewProfileImageUrl('');
+        dispatch({ type: 'FETCH_USER' });
       })
       .catch((error) => {
         console.error('Error updating profile image:', error);
@@ -29,25 +54,27 @@ function UserPage() {
       <h2>Welcome, {user.username}!</h2>
       <p>Your ID is: {user.id}</p>
       <div>
-        <img
-          src={
-            profileImageUrl ||
-            'https://t3.ftcdn.net/jpg/01/18/01/98/360_F_118019822_6CKXP6rXmVhDOzbXZlLqEM2ya4HhYzSV.jpg'
-          } // Use the same generic image URL here
-          alt='Profile'
-          width='64'
-          height='64'
-        />
+        <img src={newProfileImageUrl.profile_image_url} alt='Profile' width='100' height='100' />
+
         <div>
+          <h2>Profile Image Upload</h2>
+          {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
+          <button type='button' onClick={openWidget}>
+            Pick File
+          </button>
+        </div>
+        <br />
+        {/* <div>
           <input
             type='text'
             placeholder='Enter new profile image URL'
             value={newProfileImageUrl}
             onChange={(e) => setNewProfileImageUrl(e.target.value)}
           />
-          <button onClick={handleProfileImageUpdate}>Update Profile Image</button>
-        </div>
+          </div> */}
+        <button onClick={handleProfileImageUpdate}>Update Profile Image</button>
       </div>
+      <br />
       <LogOutButton className='btn' />
     </div>
   );

@@ -37,11 +37,14 @@ const AddCookForm = () => {
             cloudName: 'ddlkh3gov',
             // uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
             uploadPreset: 'qaikv0iz',
+            multiple: 'true',
           },
           (error, result) => {
             if (!error && result && result.event === 'success') {
               // When an upload is successful, save the uploaded URL to local state!
-              setImageURLs([...imageURLs, result.info.secure_url]);
+              // setImageURLs([...imageURLs, result.info.secure_url]);
+              setImageURLs((prevImageURLs) => [...prevImageURLs, result.info.secure_url]);
+              // Holding on to the previously uploaded images in state with prevImageURLs
             }
           }
         )
@@ -49,6 +52,7 @@ const AddCookForm = () => {
   };
   console.log('what are the images', imageURLs);
 
+  // Fall back for adding images using the URL in the form field
   // const handleImageChange = (index, value) => {
   //   const newImageURLs = [...imageURLs];
   //   newImageURLs[index] = value;
@@ -115,10 +119,6 @@ const AddCookForm = () => {
         />
       </div>
       <div>
-        <label>Recipe or Notes:</label>
-        <textarea value={recipeNotes} onChange={(e) => setRecipeNotes(e.target.value)} required />
-      </div>
-      <div>
         <label>Cook Rating:</label>
         <select value={cookRating} onChange={(e) => setCookRating(e.target.value)} required>
           <option value=''>Select Rating</option>
@@ -130,13 +130,32 @@ const AddCookForm = () => {
         </select>
       </div>
       <div>
+        <label>Recipe or Notes:</label>
+        <textarea value={recipeNotes} onChange={(e) => setRecipeNotes(e.target.value)} required />
+      </div>
+      <div>
         <div>
-          <h2>Profile Image Upload</h2>
+          {/* <h2>Profile Image Upload</h2> */}
           {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
           <button type='button' onClick={openWidget}>
-            Pick File
+            Upload Images
           </button>
         </div>
+        <div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            {imageURLs.map((url, index) => (
+              <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+                <img
+                  src={url}
+                  alt={`Uploaded ${index}`}
+                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        <button type='submit'>Submit</button>
+        {/* Fall back for adding images using the URL in the form field */}
         {/* <label>Image URLs:</label>
         {imageURLs.map((url, index) => (
           <div key={index}>
@@ -154,7 +173,6 @@ const AddCookForm = () => {
           Add Another Image
         </button> */}
       </div>
-      <button type='submit'>Submit</button>
     </form>
   );
 };

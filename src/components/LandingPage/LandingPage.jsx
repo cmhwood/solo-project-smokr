@@ -44,7 +44,7 @@ function LandingPage() {
             </button>
         </div>
           </center>
-=======
+
         </div> */}
       <div>
         <RegisterForm />
@@ -55,7 +55,7 @@ function LandingPage() {
             Login
           </button>
         </center>
->>>>>>> 539dc63a0cd42c294ebd95703ab0d382e4a41dd4
+
       </div>
       {/* </div> */}
     </div>

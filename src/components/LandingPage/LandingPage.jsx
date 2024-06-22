@@ -15,7 +15,15 @@ function LandingPage() {
 
   return (
     <div className='container'>
-      <h2>{heading}</h2>
+      <center>
+        {/* <h2>{heading}</h2> */}
+        <img
+          className='login-logo'
+          src='../images/firesmoke.png'
+          alt='Welcome to Smokr'
+        />
+        {/* <img src={logoImage} alt="Welcome to Smokr" /> */}
+      </center>
 
       <div className='grid'>
         <div className='grid-col grid-col_8'>
@@ -25,16 +33,16 @@ function LandingPage() {
 
           <p></p>
         </div>
+          <center>
         <div className='grid-col grid-col_4'>
           <RegisterForm />
 
-          <center>
             <h4>Already a Smokr Member?</h4>
             <button className='btn btn_sizeSm' onClick={onLogin}>
               Login
             </button>
-          </center>
         </div>
+          </center>
       </div>
     </div>
   );

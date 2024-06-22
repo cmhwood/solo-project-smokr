@@ -25,13 +25,14 @@ function LandingPage() {
         {/* <img src={logoImage} alt="Welcome to Smokr" /> */}
       </center>
 
-      <div className='grid'>
-        <div className='grid-col grid-col_8'>
+      {/* <div className='grid'> */}
+      {/* <div className='grid-col grid-col_8'>
           <p></p>
 
           <p></p>
 
           <p></p>
+<<<<<<< HEAD
         </div>
           <center>
         <div className='grid-col grid-col_4'>
@@ -43,7 +44,20 @@ function LandingPage() {
             </button>
         </div>
           </center>
+=======
+        </div> */}
+      <div>
+        <RegisterForm />
+
+        <center>
+          <h4>Already a Smokr Member?</h4>
+          <button className='btn btn_sizeSm' onClick={onLogin}>
+            Login
+          </button>
+        </center>
+>>>>>>> 539dc63a0cd42c294ebd95703ab0d382e4a41dd4
       </div>
+      {/* </div> */}
     </div>
   );
 }

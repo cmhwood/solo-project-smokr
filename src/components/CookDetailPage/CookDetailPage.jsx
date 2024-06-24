@@ -139,6 +139,7 @@ function CookDetails() {
       });
       setComments([...comments, response.data]); // Assuming response.data is the newly added comment
       setNewComment(''); // Clear the textarea after posting comment
+      fetchComments();
     } catch (error) {
       console.error('Error adding comment:', error);
     }
@@ -227,13 +228,17 @@ function CookDetails() {
 
       <div className='comments-section'>
         <h2>
-          <img className='speech-bubble' src='../images/blank-speech-bubble.png' alt='Comment bubble' />
+          <img
+            className='speech-bubble'
+            src='../images/blank-speech-bubble.png'
+            alt='Comment bubble'
+          />
           Comment
         </h2>
         {comments.map((comment) => (
           <div key={comment.comment_id} className='comment'>
             <p>
-              <strong>{comment.username}</strong> {comment.comment_text}
+              <strong>{comment.username}:</strong> {comment.comment_text}
             </p>
           </div>
         ))}

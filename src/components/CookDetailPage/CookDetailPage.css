@@ -4,8 +4,20 @@
   padding: 16px;
   margin-bottom: 16px;
   background-color: #f9f9f9;
+  margin-bottom: 10px;
 }
 
 .view-details p {
   margin: 8px 0;
+}
+
+.speech-bubble {
+  height: 23px;
+  max-width: 23px;
+  margin-right: 5px;
+  color: #bfbfbf;
+}
+
+.cook-details {
+  margin-bottom: 50px;
 }

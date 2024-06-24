@@ -12,6 +12,7 @@ const userRouter = require('./routes/user.router');
 const cookRouter = require('./routes/cooks.router');
 const feedRouter = require('./routes/feed.router');
 const ratingRouter = require('./routes/ratings.router');
+const commentsRouter = require('./routes/comments.router');
 
 // Express Middleware
 app.use(express.json());
@@ -29,7 +30,8 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/cooks', cookRouter);
 app.use('/api/feed', feedRouter);
-app.use('/api', ratingRouter); // Use the ratings router
+app.use('/api', ratingRouter);
+app.use('/api/comments', commentsRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {

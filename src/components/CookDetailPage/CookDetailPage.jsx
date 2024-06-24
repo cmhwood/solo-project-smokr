@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import './CookDetailPage.css';
 import { useScript } from '../../hooks/useScript';
+import { useSelector } from 'react-redux';
 
 function CookDetails() {
-  const user = useSelector((store) => store.user);
+  const user = useSelector((store) => store.user); // Assuming user info is stored in Redux
   const { cookId } = useParams(); // Get cookId from URL params
-  const dispatch = useDispatch();
   const history = useHistory();
   const [imageURLs, setImageURLs] = useState([]);
   const [editMode, setEditMode] = useState(false);
-
+  const [newComment, setNewComment] = useState('');
+  const [comments, setComments] = useState([]);
   const [formData, setFormData] = useState({
     cook_name: '',
     cook_date: '',
@@ -29,16 +29,8 @@ function CookDetails() {
 
   useEffect(() => {
     fetchCookDetails();
-  }, []); // Fetch cook details on component mount
-
-  useEffect(() => {
-    if (editMode) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        cook_image_urls: imageURLs,
-      }));
-    }
-  }, [imageURLs, editMode]);
+    fetchComments();
+  }, []); // Fetch cook details and comments on component mount
 
   const fetchCookDetails = async () => {
     try {
@@ -67,6 +59,15 @@ function CookDetails() {
       });
     } catch (error) {
       console.error('Error fetching cook details:', error);
+    }
+  };
+
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get(`/api/comments?cookId=${cookId}`);
+      setComments(response.data);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
     }
   };
 
@@ -125,6 +126,24 @@ function CookDetails() {
     });
   };
 
+  const handleCommentChange = (e) => {
+    setNewComment(e.target.value);
+  };
+
+  const handleAddComment = async () => {
+    try {
+      const response = await axios.post('/api/comments', {
+        cook_id: cookId,
+        user_id: user.id,
+        comment_text: newComment,
+      });
+      setComments([...comments, response.data]); // Assuming response.data is the newly added comment
+      setNewComment(''); // Clear the textarea after posting comment
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
+  };
+
   return (
     <div className='cook-details'>
       {editMode ? (
@@ -160,7 +179,6 @@ function CookDetails() {
             onChange={handleFormDataChange}
           ></textarea>
           <div>
-            {/* <h2>Image Upload</h2> */}
             <button type='button' onClick={openWidget}>
               Upload Images
             </button>
@@ -206,6 +224,30 @@ function CookDetails() {
           )}
         </div>
       )}
+
+      <div className='comments-section'>
+        <h2>
+          <img className='speech-bubble' src='../images/blank-speech-bubble.png' alt='Comment bubble' />
+          Comment
+        </h2>
+        {comments.map((comment) => (
+          <div key={comment.comment_id} className='comment'>
+            <p>
+              <strong>{comment.username}</strong> {comment.comment_text}
+            </p>
+          </div>
+        ))}
+        {user && (
+          <div className='add-comment'>
+            <textarea
+              value={newComment}
+              onChange={handleCommentChange}
+              placeholder='Add a comment...'
+            ></textarea>
+            <button onClick={handleAddComment}>Post Comment</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

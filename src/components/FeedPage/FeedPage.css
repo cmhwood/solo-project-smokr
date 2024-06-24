@@ -26,7 +26,7 @@ h2 {
 
 .cook-name {
   cursor: pointer;
-  color: #d5d5d5;
+  color: #eeeeee;
 }
 
 .cook-images {
@@ -50,7 +50,7 @@ h2 {
 
 .cook-card {
   background-color: #2f4f4f;
-  color: #d5d5d5;
+  color: #eeeeee;
   border: 1px solid #172727;
 }
 

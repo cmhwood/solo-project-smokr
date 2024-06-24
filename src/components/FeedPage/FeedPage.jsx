@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import './FeedPage.css';
 
 function FeedPage() {
   const dispatch = useDispatch();
@@ -17,50 +18,52 @@ function FeedPage() {
   };
 
   return (
-    <div>
-       {/*(add to div?) className='container' */}
-      <h2>All Cooks</h2>
-      <div>
+    <div className='container-fluid px-0'>
+      <h2 className='my-4 text-white'>What's Cookin'</h2>
+      <div className='row mx-0'>
         {feeds?.map((cook) => (
-          <div key={cook.id} className='cook'>
-            <img src={cook.profile_image_url} alt='Profile' style={{ maxWidth: '32px' }} />
-            <p>
-              <strong>Cook Name: </strong>
-              <span
-                style={{ cursor: 'pointer', color: 'blue' }}
-                onClick={() => handleCookClick(cook.id)}
-              >
-                {cook.cook_name}
-              </span>
-            </p>
-            {/* <p>
-              <strong>Cook Date:</strong> {cook.cook_date}
-            </p> */}
-            <p>
-              <strong>Location:</strong> {cook.location}
-            </p>
-            <p>
-              <strong>Cook Rating:</strong> {cook.cook_rating}
-              {/* Rating:
-              {cookRatings?.map((rating, i) => (
-                <li key={i}>{rating.cook_rating}</li>
-              ))} */}
-            </p>
-            <div>
-              <strong>Cook Images:</strong>
-              {cook.cook_images?.map((url, index) => (
+          <div key={cook.id} className='col-12 mb-4 px-0'>
+            <div className='card p-3 cook-card'>
+              <div className='d-flex align-items-center'>
                 <img
-                  key={index}
-                  src={url}
-                  alt={`Cook Image ${index}`}
-                  style={{ maxWidth: '100px' }}
+                  src={cook.profile_image_url}
+                  alt='Profile'
+                  className='profile-image rounded-circle mr-3'
                 />
-              ))}
+                <div>
+                  <p className='mb-1'>
+                    {/* <strong>Cook Name: </strong> */}
+                    <span className='cook-name' onClick={() => handleCookClick(cook.id)}>
+                      {cook.cook_name}
+                    </span>
+                  </p>
+                  <p className='mb-1'>
+                    {/* <strong>Location:</strong>  */}
+                    {cook.location}
+                  </p>
+                </div>
+              </div>
+              <div className='mt-3'>
+                <p>
+                  <strong>Rating:</strong> {cook.cook_rating}
+                </p>
+                <div>
+                  {/* <strong className='text-white'>Cook Images:</strong> */}
+                  <div className='cook-images'>
+                    {cook.cook_images?.slice(0, 2).map((url, index) => (
+                      <img
+                        key={index}
+                        src={url}
+                        alt={`Cook Image ${index}`}
+                        className={`cook-image ${
+                          index === 0 ? 'cook-image-large' : 'cook-image-large'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-            {/* <p>
-              <strong>Recipe Notes:</strong> {cook.recipe_notes}
-            </p> 
-            */}
           </div>
         ))}
       </div>

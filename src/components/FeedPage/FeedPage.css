@@ -1,0 +1,63 @@
+body {
+  background-color: #2f4f4f;
+  color: #bfbfbf;
+  padding-bottom: 80px; /* Adjust this value to fit the height of your navbar */
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Center the heading and reduce top and bottom margins */
+h2 {
+  text-align: center;
+  margin-top: 2rem; /* Adjust as needed */
+  margin-bottom: 1rem; /* Adjust as needed */
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%; /* Ensure the image is circular */
+  margin-right: 10px;
+}
+
+.cook-name {
+  cursor: pointer;
+  color: #d5d5d5;
+}
+
+.cook-images {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.cook-image-large {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.cook-image-small {
+  width: calc(50% - 5px); /* Adjust for margin-right */
+  height: auto;
+  object-fit: cover;
+  margin-right: 10px; /* Adjust as needed */
+}
+
+.cook-card {
+  background-color: #2f4f4f;
+  color: #d5d5d5;
+  border: 1px solid #172727;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 576px) {
+  .cook-image-small {
+    width: calc(50% - 5px); /* Adjust for margin-right */
+    max-height: 100px; /* Adjust height as needed */
+  }
+}

@@ -19,7 +19,7 @@ function FeedPage() {
 
   return (
     <div className='container-fluid px-0'>
-      <h2 className='my-4 text-white'>What's Cookin'</h2>
+      <h2 className='my-4'>What's Cookin'</h2>
       <div className='row mx-0'>
         {feeds?.map((cook) => (
           <div key={cook.id} className='col-12 mb-4 px-0'>
@@ -33,7 +33,9 @@ function FeedPage() {
                 <div>
                   <p className='mb-1'>
                     {/* <strong>Cook Name: </strong> */}
-                    <span className='cook-name' onClick={() => handleCookClick(cook.id)}>
+                    <span className='cook-name' 
+                    onClick={() => handleCookClick(cook.id)}
+                    >
                       {cook.cook_name}
                     </span>
                   </p>
@@ -48,8 +50,8 @@ function FeedPage() {
                   <strong>Rating:</strong> {cook.cook_rating}
                 </p>
                 <div>
-                  {/* <strong className='text-white'>Cook Images:</strong> */}
                   <div className='cook-images'>
+                  {/* <strong className='text-white'>Cook Images:</strong> */}
                     {cook.cook_images?.slice(0, 2).map((url, index) => (
                       <img
                         key={index}

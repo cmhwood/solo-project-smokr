@@ -7,6 +7,7 @@ const CooksPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const cooks = useSelector((state) => state.cooksReducer);
+  const cookRatings = useSelector((store) => store.cookRatings);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_COOKS' }); // Fetch cooks when component mounts
@@ -17,45 +18,59 @@ const CooksPage = () => {
   };
 
   return (
-    <div className='container'>
-      <h2>My Cooks</h2>
-      <div>
+    <div className='container-fluid px-0'>
+      <h2 className='my-4'>My Cooks</h2>
+      <div className='row mx-0'>
         {cooks.map((cook) => (
-          <div key={cook.id} className='cook'>
-            {/* Not showing profile pic on cooks page */}
-            {/* <img src={cook.profile_image_url} alt='Profile' style={{ maxWidth: '100px' }} /> */}
-            <p>
-              <strong>Cook Name: </strong>
-              <span
-                style={{ cursor: 'pointer', color: 'blue' }}
-                onClick={() => handleCookClick(cook.id)}
-              >
-                {cook.cook_name}
-              </span>
-            </p>
-            {/* <p>
-              <strong>Cook Date:</strong> {cook.cook_date}
-            </p> */}
-            <p>
-              <strong>Location:</strong> {cook.location}
-            </p>
-            <div>
-              <strong>Cook Images:</strong>
-              {cook.cook_images?.map((url, index) => (
+          <div key={cook.id} className='col-12 mb-4 px-0'>
+            <div className='card p-3 cook-card'>
+              <div className='d-flex align-items-center'>
                 <img
-                  key={index}
-                  src={url}
-                  alt={`Cook Image ${index}`}
-                  style={{ maxWidth: '100px' }}
+                  src={cook.profile_image_url}
+                  alt='Profile'
+                  className='profile-image rounded-circle mr-3'
                 />
-              ))}
+                <div>
+                  <p className='mb-1'>
+                    {/* <strong>Cook Name: </strong> */}
+                    <span className='cook-name' onClick={() => handleCookClick(cook.id)}>
+                      {cook.cook_name}
+                    </span>
+                  </p>
+                  {/* <p>
+                  <strong>Cook Date:</strong> {cook.cook_date}
+                  </p> */}
+                  <p className='mb-1'>
+                    {/* <strong>Location:</strong>  */}
+                    {cook.location}
+                  </p>
+                </div>
+              </div>
+                {/* <div className='mt-3'> */}
+                {/* Not showing rating on cooks page */}
+                {/* <p> 
+                  <strong>Rating:</strong> {cook.cook_rating}
+                </p> */}
+                {/* <div> */}
+                <div className='cook-images'>
+                    {/* <strong>Cook Images:</strong> */}
+                    {cook.cook_images?.slice(0, 2).map((url, index) => (
+                      <img
+                        key={index}
+                        src={url}
+                        alt={`Cook Image ${index}`}
+                        className={`cook-image ${
+                          index === 0 ? 'cook-image-large' : 'cook-image-large'
+                        }`}
+                      />
+                    ))}
+                    {/* </div> */}
+                </div>
+                {/* <p>
+                <strong>Recipe Notes:</strong> {cook.recipe_notes}
+                </p> */}
+              {/* </div> */}
             </div>
-            {/* <p>
-              <strong>Recipe Notes:</strong> {cook.recipe_notes}
-            </p>
-            <p>
-              <strong>Cook Rating:</strong> {cook.cook_rating}
-            </p> */}
           </div>
         ))}
       </div>

@@ -24,11 +24,11 @@
 .navLink {
   flex: 1; /* Each link will take up equal space */
   text-align: center; /* Center text horizontally within each flex item */
-  color: #bfbfbf;
+  color: #eeeeee;
   text-decoration: none;
   font-size: 16px;
 }
 
 .navLink:hover {
-  color: #bfbfbf;
+  color: #eeeeee;
 }

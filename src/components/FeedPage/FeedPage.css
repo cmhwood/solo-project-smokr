@@ -1,6 +1,6 @@
 body {
   background-color: #2f4f4f;
-  color: #bfbfbf;
+  /* color: #bfbfbf; taken care of in app.css*/
   padding-bottom: 80px; /* Adjust this value to fit the height of your navbar */
 }
 
@@ -49,7 +49,7 @@ h2 {
 }
 
 .cook-card {
-  background-color: #2f4f4f;
+  background-color: #172727;
   color: #eeeeee;
   border: 1px solid #172727;
 }

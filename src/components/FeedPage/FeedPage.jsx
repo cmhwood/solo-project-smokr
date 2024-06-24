@@ -17,7 +17,8 @@ function FeedPage() {
   };
 
   return (
-    <div className='container'>
+    <div>
+       {/*(add to div?) className='container' */}
       <h2>All Cooks</h2>
       <div>
         {feeds?.map((cook) => (

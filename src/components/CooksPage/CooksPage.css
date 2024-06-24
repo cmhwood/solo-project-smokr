@@ -1,11 +1,15 @@
 .cook {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-    background-color: #f9f9f9;
-  }
-  
-  .cook p {
-    margin: 8px 0;
-  }
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 8px;
+  background-color: #f9f9f9;
+}
+
+.cook p {
+  margin: 8px 0;
+}
+
+.cook-details {
+  margin: 0px;
+}

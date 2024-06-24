@@ -223,10 +223,37 @@ function CookDetails() {
               <button onClick={handleDeleteCook}>Delete</button>
             </>
           )}
+          <div className='comments-section'>
+            <h2>
+              <img
+                className='speech-bubble'
+                src='../images/blank-speech-bubble.png'
+                alt='Comment bubble'
+              />
+              Comment
+            </h2>
+            {comments.map((comment) => (
+              <div key={comment.comment_id} className='comment'>
+                <p>
+                  <strong>{comment.username}:</strong> {comment.comment_text}
+                </p>
+              </div>
+            ))}
+            {user && (
+              <div className='add-comment'>
+                <textarea
+                  value={newComment}
+                  onChange={handleCommentChange}
+                  placeholder='Add a comment...'
+                ></textarea>
+                <button onClick={handleAddComment}>Post Comment</button>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
-      <div className='comments-section'>
+      {/* <div className='comments-section'>
         <h2>
           <img
             className='speech-bubble'
@@ -252,7 +279,7 @@ function CookDetails() {
             <button onClick={handleAddComment}>Post Comment</button>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

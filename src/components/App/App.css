@@ -7,8 +7,8 @@ body,
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
-  background-color: #2F4F4F;
-  color: #BFBFBF;
+  background-color: #2f4f4f;
+  color: #bfbfbf;
 }
 
 img {
@@ -20,9 +20,9 @@ img {
 Container
 -------------------------------------------------------------------------------- */
 
-.container {
+/* .container {
   padding: 20px;
-}
+} */
 
 /* --------------------------------------------------------------------------------
 Button
@@ -65,11 +65,11 @@ Button
 .btn_asLink {
   padding: 0;
   border-width: 0;
-  border-bottom: 1px solid #BFBFBF;
+  border-bottom: 1px solid #bfbfbf;
   border-radius: 0;
   background: none;
   font: inherit;
-  color: #BFBFBF;
+  color: #bfbfbf;
 }
 
 .btn_asLink:hover {
@@ -112,4 +112,3 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
-

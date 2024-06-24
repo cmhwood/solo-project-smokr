@@ -5,12 +5,12 @@
   left: 0;
   right: 0;
   width: 100%;
-  background-color: #fff;
+  background-color: #172727;
   display: flex;
   justify-content: center; /* Center the container */
   padding: 15px 0;
   box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
-  border-top: 1px solid #ddd;
+  /* border-top: 1px solid #172727; */
   margin: 0;
   box-sizing: border-box;
 }
@@ -24,7 +24,7 @@
 .navLink {
   flex: 1; /* Each link will take up equal space */
   text-align: center; /* Center text horizontally within each flex item */
-  color: #333;
+  color: #bfbfbf;
   text-decoration: none;
   font-size: 16px;
 }

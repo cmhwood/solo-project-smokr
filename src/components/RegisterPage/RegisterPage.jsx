@@ -7,7 +7,12 @@ function RegisterPage() {
   const history = useHistory();
 
   return (
-    <div>
+    <div className='container'>
+      <center>
+        {/* <h2>{heading}</h2> */}
+        <img className='login-logo' src='../images/firesmoke.png' alt='Welcome to Smokr' />
+        {/* <img src={logoImage} alt="Welcome to Smokr" /> */}
+      </center>
       <RegisterForm />
 
       <center>

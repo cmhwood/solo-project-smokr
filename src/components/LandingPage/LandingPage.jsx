@@ -17,11 +17,7 @@ function LandingPage() {
     <div className='container'>
       <center>
         {/* <h2>{heading}</h2> */}
-        <img
-          className='login-logo'
-          src='../images/firesmoke.png'
-          alt='Welcome to Smokr'
-        />
+        <img className='login-logo' src='../images/firesmoke.png' alt='Welcome to Smokr' />
         {/* <img src={logoImage} alt="Welcome to Smokr" /> */}
       </center>
 
@@ -32,7 +28,6 @@ function LandingPage() {
           <p></p>
 
           <p></p>
-<<<<<<< HEAD
         </div>
           <center>
         <div className='grid-col grid-col_4'>
@@ -55,7 +50,6 @@ function LandingPage() {
             Login
           </button>
         </center>
-
       </div>
       {/* </div> */}
     </div>

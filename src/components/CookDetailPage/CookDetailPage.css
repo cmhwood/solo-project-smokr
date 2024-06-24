@@ -1,9 +1,8 @@
 .view-details {
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   border-radius: 8px;
   padding: 16px;
-  margin-bottom: 8px;
-  background-color: #f9f9f9;
+  background-color: #172727;
   margin-bottom: 10px;
 }
 
@@ -12,9 +11,10 @@
 }
 
 .speech-bubble {
-  height: 23px;
-  max-width: 23px;
+  height: 25px;
+  max-width: 25px;
   margin-right: 5px;
+  margin-bottom: 5px;
   color: #bfbfbf;
 }
 
@@ -23,10 +23,25 @@
 }
 
 .comments-section {
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   border-radius: 8px;
-  padding: 16px;
+  padding: 8px;
+  margin-top: 16px;
   margin-bottom: 8px;
-  background-color: #f9f9f9;
+  background-color: #172727;
   margin-bottom: 10px;
+}
+
+.cook-images {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.cook-image-detail-large {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  margin-bottom: 4px;
+  border: 1px solid #bfbfbf;
 }

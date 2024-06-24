@@ -4,6 +4,7 @@ import axios from 'axios';
 import './CookDetailPage.css';
 import { useScript } from '../../hooks/useScript';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 function CookDetails() {
   const user = useSelector((store) => store.user); // Assuming user info is stored in Redux
@@ -49,7 +50,7 @@ function CookDetails() {
       setFormData({
         user_id,
         cook_name,
-        cook_date,
+        cook_date: moment(cook_date).format('MMMM Do, YYYY'),
         location,
         recipe_notes,
         cook_rating,
@@ -201,54 +202,61 @@ function CookDetails() {
           <button onClick={handleEditToggle}>Cancel</button>
         </div>
       ) : (
-        <div className='view-details'>
-          <span>{formData.cook_name}</span>
-          <p>Cook Date: {formData.cook_date}</p>
-          <p>Location: {formData.location}</p>
-          <p>Recipe Notes: {formData.recipe_notes}</p>
-          <p>Cook Rating: {formData.cook_rating_text}</p>
-          <div>
-            {formData.cook_image_urls.map((url, index) => (
-              <img
-                key={index}
-                src={url}
-                alt={`Cook Image ${index}`}
-                style={{ maxWidth: '100px' }}
-              />
-            ))}
-          </div>
-          {user.id === formData.user_id && (
-            <>
-              <button onClick={handleEditToggle}>Edit</button>
-              <button onClick={handleDeleteCook}>Delete</button>
-            </>
-          )}
-          <div className='comments-section'>
-            <h2>
-              <img
-                className='speech-bubble'
-                src='../images/blank-speech-bubble.png'
-                alt='Comment bubble'
-              />
-              Comment
-            </h2>
-            {comments.map((comment) => (
-              <div key={comment.comment_id} className='comment'>
-                <p>
-                  <strong>{comment.username}:</strong> {comment.comment_text}
-                </p>
-              </div>
-            ))}
-            {user && (
-              <div className='add-comment'>
-                <textarea
-                  value={newComment}
-                  onChange={handleCommentChange}
-                  placeholder='Add a comment...'
-                ></textarea>
-                <button onClick={handleAddComment}>Post Comment</button>
-              </div>
+        <div className='container-fluid px-0'>
+          <h2 className='my-4'>{formData.cook_name}</h2>
+          {/* <span>{formData.cook_name}</span> */}
+
+          <div className='view-details'>
+            <p>Cook Date: {formData.cook_date}</p>
+            <p>Location: {formData.location}</p>
+            <p>Recipe Notes: {formData.recipe_notes}</p>
+            <p>Cook Rating: {formData.cook_rating_text}</p>
+            <div className='cook-images-detail'>
+              {formData.cook_image_urls.map((url, index) => (
+                <img
+                  key={index}
+                  src={url}
+                  alt={`Cook Image ${index}`}
+                  style={{ maxWidth: '100%' }}
+                  className={`cook-image-detail ${
+                    index === 0 ? 'cook-image-detail-large' : 'cook-image-detail-large'
+                  }`}
+                />
+              ))}
+            </div>
+            {user.id === formData.user_id && (
+              <>
+                <button onClick={handleEditToggle}>Edit</button>
+                <button onClick={handleDeleteCook}>Delete</button>
+              </>
             )}
+            <div className='comments-section'>
+              <h2>
+                <img
+                  className='speech-bubble'
+                  src='../images/color-bubble-50.png'
+                  alt='Comment bubble'
+                />
+                Comment
+              </h2>
+              {comments.map((comment) => (
+                <div key={comment.comment_id} className='comment'>
+                  <p>
+                    <strong>{comment.username}:</strong> {comment.comment_text}
+                  </p>
+                </div>
+              ))}
+              {user && (
+                <div className='add-comment'>
+                  <textarea
+                    value={newComment}
+                    onChange={handleCommentChange}
+                    placeholder='Add a comment...'
+                  ></textarea>
+                  <button onClick={handleAddComment}>Post Comment</button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

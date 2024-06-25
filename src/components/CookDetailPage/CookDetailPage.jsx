@@ -6,7 +6,6 @@ import './CookDetailPage.css';
 import { useScript } from '../../hooks/useScript';
 import { useSelector } from 'react-redux';
 
-
 function CookDetails() {
   const user = useSelector((store) => store.user);
   const { cookId } = useParams();
@@ -260,7 +259,7 @@ function CookDetails() {
               </>
             )}
             <div className='comments-section'>
-              <h2>
+              <h2 className='comment'>
                 <img
                   className='speech-bubble'
                   src='../images/color-bubble-50.png'

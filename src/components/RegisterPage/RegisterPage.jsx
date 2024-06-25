@@ -15,10 +15,11 @@ function RegisterPage() {
       </center>
       <RegisterForm />
 
-      <center>
+      <center className='smokr-member'>
+          <h4>Already a Smokr Member?</h4>
         <button
-          type="button"
-          className="btn btn_asLink"
+          type='button'
+          className='login-btn'
           onClick={() => {
             history.push('/login');
           }}

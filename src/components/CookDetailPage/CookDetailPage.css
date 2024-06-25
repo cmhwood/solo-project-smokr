@@ -104,3 +104,7 @@ body {
   background-color: #172727;
   border: 1px solid #172727;
 } */
+
+.comment {
+  text-align: left;
+}

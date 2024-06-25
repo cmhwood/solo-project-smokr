@@ -44,9 +44,9 @@ function LandingPage() {
       <div>
         <RegisterForm />
 
-        <center>
+        <center className='smokr-member'>
           <h4>Already a Smokr Member?</h4>
-          <button className='btn btn_sizeSm' onClick={onLogin}>
+          <button className='login-btn' onClick={onLogin}>
             Login
           </button>
         </center>

@@ -35,7 +35,7 @@ function Nav() {
             </Link>
 
             <Link className='navLink' to='/cooks'>
-              <img className='speech-bubble' src='../images/salt-bae-24.png' alt='Comment bubble' />
+              <img className='speech-bubble' src='../images/weber-24.png' alt='Comment bubble' />
               {/* Cooks */}
             </Link>
 

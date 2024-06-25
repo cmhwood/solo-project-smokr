@@ -1,5 +1,8 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
 .view-details {
-  /* border: 1px solid #ddd; */
   border-radius: 8px;
   padding: 16px;
   background-color: #172727;
@@ -8,6 +11,7 @@
 
 .view-details p {
   margin: 8px 0;
+  color: #fff;
 }
 
 .speech-bubble {
@@ -15,7 +19,6 @@
   max-width: 25px;
   margin-right: 5px;
   margin-bottom: 5px;
-  color: #bfbfbf;
 }
 
 .cook-details {
@@ -23,25 +26,80 @@
 }
 
 .comments-section {
-  /* border: 1px solid #ddd; */
   border-radius: 8px;
-  padding: 8px;
+  /* padding: 8px; */
   margin-top: 16px;
-  margin-bottom: 8px;
   background-color: #172727;
-  margin-bottom: 10px;
 }
 
-.cook-images {
+.cook-images-detail {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 10px;
+  gap: 10px;
 }
 
 .cook-image-detail-large {
   width: 100%;
   height: auto;
   object-fit: cover;
-  margin-bottom: 4px;
   border: 1px solid #bfbfbf;
 }
+
+.edit-form {
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.edit-form .form-group {
+  margin-bottom: 15px;
+}
+
+.edit-form input.form-control,
+.edit-form select.form-control,
+.edit-form textarea.form-control {
+  width: 100%;
+}
+
+.image-preview {
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+}
+
+.image-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.edit-form .btn {
+  margin: 5px;
+  color: #eeeeee;
+  background-color: #2f4f4f;
+}
+
+.container-fluid .btn {
+  margin-top: .5rem;
+  margin-right: .5rem;
+  color: #eeeeee;
+  background-color: #2f4f4f;
+}
+
+.btn {
+  margin-top: .5rem;
+  color: #eeeeee;
+  background-color: #2f4f4f;
+}
+
+.card {
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #172727;
+  border: 1px solid #172727;
+}
+
+/* .card-body {
+  background-color: #172727;
+  border: 1px solid #172727;
+} */

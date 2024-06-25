@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 
 function CookDetails() {
-  const user = useSelector((store) => store.user); // Assuming user info is stored in Redux
-  const { cookId } = useParams(); // Get cookId from URL params
+  const user = useSelector((store) => store.user);
+  const { cookId } = useParams();
   const history = useHistory();
   const [imageURLs, setImageURLs] = useState([]);
   const [editMode, setEditMode] = useState(false);
@@ -25,13 +25,12 @@ function CookDetails() {
     cook_image_urls: [],
   });
 
-  // Load the Cloudinary script unconditionally
   useScript('https://widget.cloudinary.com/v2.0/global/all.js');
 
   useEffect(() => {
     fetchCookDetails();
     fetchComments();
-  }, []); // Fetch cook details and comments on component mount
+  }, []);
 
   const fetchCookDetails = async () => {
     try {
@@ -50,7 +49,7 @@ function CookDetails() {
       setFormData({
         user_id,
         cook_name,
-        cook_date: moment(cook_date).format('MMMM Do, YYYY'),
+        cook_date: moment(cook_date).format('YYYY-MM-DD'),
         location,
         recipe_notes,
         cook_rating,
@@ -74,21 +73,19 @@ function CookDetails() {
 
   const openWidget = () => {
     if (window.cloudinary) {
-      window.cloudinary
-        .createUploadWidget(
-          {
-            sources: ['local', 'url', 'camera'],
-            cloudName: 'ddlkh3gov',
-            uploadPreset: 'qaikv0iz',
-            multiple: 'true',
-          },
-          (error, result) => {
-            if (!error && result && result.event === 'success') {
-              setImageURLs((prevImageURLs) => [...prevImageURLs, result.info.secure_url]);
-            }
+      window.cloudinary.createUploadWidget(
+        {
+          sources: ['local', 'url', 'camera'],
+          cloudName: 'ddlkh3gov',
+          uploadPreset: 'qaikv0iz',
+          multiple: 'true',
+        },
+        (error, result) => {
+          if (!error && result && result.event === 'success') {
+            setImageURLs((prevImageURLs) => [...prevImageURLs, result.info.secure_url]);
           }
-        )
-        .open();
+        }
+      ).open();
     }
   };
 
@@ -117,7 +114,7 @@ function CookDetails() {
   };
 
   const handleEditToggle = () => {
-    setEditMode(!editMode); // Toggle edit mode
+    setEditMode(!editMode);
   };
 
   const handleFormDataChange = (e) => {
@@ -138,8 +135,8 @@ function CookDetails() {
         user_id: user.id,
         comment_text: newComment,
       });
-      setComments([...comments, response.data]); // Assuming response.data is the newly added comment
-      setNewComment(''); // Clear the textarea after posting comment
+      setComments([...comments, response.data]);
+      setNewComment('');
       fetchComments();
     } catch (error) {
       console.error('Error adding comment:', error);
@@ -149,62 +146,88 @@ function CookDetails() {
   return (
     <div className='cook-details'>
       {editMode ? (
-        <div className='edit-form'>
-          <input
-            type='text'
-            name='cook_name'
-            value={formData.cook_name}
-            onChange={handleFormDataChange}
-          />
-          <input
-            type='date'
-            name='cook_date'
-            value={formData.cook_date}
-            onChange={handleFormDataChange}
-          />
-          <input
-            type='text'
-            name='location'
-            value={formData.location}
-            onChange={handleFormDataChange}
-          />
-          <select name='cook_rating' value={formData.cook_rating} onChange={handleFormDataChange}>
-            <option value='1'>🔥</option>
-            <option value='2'>🔥🔥</option>
-            <option value='3'>🔥🔥🔥</option>
-            <option value='4'>🔥🔥🔥🔥</option>
-            <option value='5'>🔥🔥🔥🔥🔥</option>
-          </select>
-          <textarea
-            name='recipe_notes'
-            value={formData.recipe_notes}
-            onChange={handleFormDataChange}
-          ></textarea>
-          <div>
-            <button type='button' onClick={openWidget}>
-              Upload Images
-            </button>
-          </div>
-          <div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {imageURLs.map((url, index) => (
-                <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
-                  <img
-                    src={url}
-                    alt={`Uploaded ${index}`}
-                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                  />
-                </div>
-              ))}
+        <div className='card edit-form'>
+          <div className='card-body'>
+            <div className='form-group'>
+              <input
+                type='text'
+                className='form-control'
+                name='cook_name'
+                value={formData.cook_name}
+                onChange={handleFormDataChange}
+                placeholder='Cook Name'
+              />
+            </div>
+            <div className='form-group'>
+              <input
+                type='date'
+                className='form-control'
+                name='cook_date'
+                value={formData.cook_date}
+                onChange={handleFormDataChange}
+                placeholder='Cook Date'
+              />
+            </div>
+            <div className='form-group'>
+              <input
+                type='text'
+                className='form-control'
+                name='location'
+                value={formData.location}
+                onChange={handleFormDataChange}
+                placeholder='Location'
+              />
+            </div>
+            <div className='form-group'>
+              <select
+                className='form-control custom-select'
+                name='cook_rating'
+                value={formData.cook_rating}
+                onChange={handleFormDataChange}
+              >
+                <option value='1'>🔥</option>
+                <option value='2'>🔥🔥</option>
+                <option value='3'>🔥🔥🔥</option>
+                <option value='4'>🔥🔥🔥🔥</option>
+                <option value='5'>🔥🔥🔥🔥🔥</option>
+              </select>
+            </div>
+            <div className='form-group'>
+              <textarea
+                className='form-control'
+                name='recipe_notes'
+                value={formData.recipe_notes}
+                onChange={handleFormDataChange}
+                placeholder='Recipe Notes'
+              ></textarea>
+            </div>
+            <div className='form-group text-center'>
+              <button type='button' className='btn btn-primary' onClick={openWidget}>
+                Upload Images
+              </button>
+            </div>
+            <div className='form-group'>
+              <div className='d-flex flex-wrap justify-content-center'>
+                {imageURLs.map((url, index) => (
+                  <div key={index} className='image-preview'>
+                    <img src={url} alt={`Uploaded ${index}`} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className='form-group text-center'>
+              <button className='btn btn-success' onClick={handleUpdateCook}>
+                Save
+              </button>
+              <button className='btn btn-secondary' onClick={handleEditToggle}>
+                Cancel
+              </button>
             </div>
           </div>
-          <button onClick={handleUpdateCook}>Save</button>
-          <button onClick={handleEditToggle}>Cancel</button>
         </div>
       ) : (
         <div className='container-fluid px-0'>
           <h2 className='my-4'>{formData.cook_name}</h2>
-          {/* <span>{formData.cook_name}</span> */}
 
           <div className='view-details'>
             <p>Cook Date: {formData.cook_date}</p>
@@ -217,7 +240,6 @@ function CookDetails() {
                   key={index}
                   src={url}
                   alt={`Cook Image ${index}`}
-                  style={{ maxWidth: '100%' }}
                   className={`cook-image-detail ${
                     index === 0 ? 'cook-image-detail-large' : 'cook-image-detail-large'
                   }`}
@@ -226,8 +248,12 @@ function CookDetails() {
             </div>
             {user.id === formData.user_id && (
               <>
-                <button onClick={handleEditToggle}>Edit</button>
-                <button onClick={handleDeleteCook}>Delete</button>
+                <button className='btn' onClick={handleEditToggle}>
+                  Edit
+                </button>
+                <button className='btn' onClick={handleDeleteCook}>
+                  Delete
+                </button>
               </>
             )}
             <div className='comments-section'>
@@ -252,42 +278,17 @@ function CookDetails() {
                     value={newComment}
                     onChange={handleCommentChange}
                     placeholder='Add a comment...'
+                    className='form-control'
                   ></textarea>
-                  <button onClick={handleAddComment}>Post Comment</button>
+                  <button className='btn btn-primary mt-2' onClick={handleAddComment}>
+                    Post Comment
+                  </button>
                 </div>
               )}
             </div>
           </div>
         </div>
       )}
-
-      {/* <div className='comments-section'>
-        <h2>
-          <img
-            className='speech-bubble'
-            src='../images/blank-speech-bubble.png'
-            alt='Comment bubble'
-          />
-          Comment
-        </h2>
-        {comments.map((comment) => (
-          <div key={comment.comment_id} className='comment'>
-            <p>
-              <strong>{comment.username}:</strong> {comment.comment_text}
-            </p>
-          </div>
-        ))}
-        {user && (
-          <div className='add-comment'>
-            <textarea
-              value={newComment}
-              onChange={handleCommentChange}
-              placeholder='Add a comment...'
-            ></textarea>
-            <button onClick={handleAddComment}>Post Comment</button>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 }

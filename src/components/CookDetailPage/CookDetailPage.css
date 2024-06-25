@@ -11,7 +11,7 @@ body {
 
 .view-details p {
   margin: 8px 0;
-  color: #fff;
+  color: #eeeeee;
 }
 
 .speech-bubble {
@@ -58,6 +58,7 @@ body {
 .edit-form select.form-control,
 .edit-form textarea.form-control {
   width: 100%;
+  /* background: #eeeeee; */
 }
 
 .image-preview {

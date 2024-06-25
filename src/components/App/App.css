@@ -35,7 +35,7 @@ Button
   border-width: 1px 1px 3px;
   border-radius: 4px;
   background-color: #2f4f4f;
-  color: #f8f8f8;
+  color: #eeeeee;
   font-size: 1.1rem;
   outline: 0;
   cursor: pointer;
@@ -44,7 +44,7 @@ Button
 .login-btn,
 .register-btn,
 .pick-btn,
-.profile-btn, 
+.profile-btn,
 .log-out-btn {
   margin: 3px;
   color: #eeeeee;
@@ -80,7 +80,7 @@ Button
   border-radius: 0;
   background: none;
   font: inherit;
-  color: #bfbfbf;
+  color: #eeeeee;
 }
 
 .btn_asLink:hover {

@@ -166,7 +166,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [req.params.id, req.user.id])
     .then(() => {
-      res.sendStatus(204); // Changed to 204 for successful deletion (No Content)
+      res.sendStatus(204); // 204 for successful deletion (No Content)
     })
     .catch((error) => {
       console.error('Error deleting cook', error);
@@ -175,7 +175,6 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 });
 
 // GET route for fetching a specific cook by ID
-// In your cook router (cook.router.js)
 router.get('/:id', async (req, res) => {
   const cookId = req.params.id;
   const query = `

@@ -5,6 +5,8 @@ import axios from 'axios';
 import './CookDetailPage.css';
 import { useScript } from '../../hooks/useScript';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 function CookDetails() {
   const user = useSelector((store) => store.user);
@@ -95,24 +97,58 @@ function CookDetails() {
     try {
       const updatedFormData = {
         ...formData,
+        cook_date: moment(formData.cook_date, 'MMMM Do, YYYY').format('YYYY-MM-DD'), // Convert to YYYY-MM-DD format
         cook_image_urls: imageURLs,
       };
       await axios.put(`/api/cooks/${cookId}`, updatedFormData);
-      fetchCookDetails();
-      setEditMode(false);
+      fetchCookDetails(); // Fetch updated details after successful update
+      setEditMode(false); // Exit edit mode
     } catch (error) {
       console.error('Error updating cook:', error);
     }
   };
 
   const handleDeleteCook = async () => {
-    try {
-      const softDelete = { ...formData, is_active: false };
-      await axios.put(`/api/cooks/${cookId}`, softDelete);
-      history.push('/cooks');
-    } catch (error) {
-      console.error('Error deleting cook:', error);
-    }
+    // Show confirmation dialog using SweetAlert
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      // icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#172727',
+      confirmButtonText: 'Yes, delete it!',
+      background: '#eeeeee',
+      color: '#172727',
+      // border: '1px solid #bfbfbf'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const softDelete = {
+            ...formData,
+            is_active: false,
+            cook_date: moment(formData.cook_date, 'MMMM Do, YYYY').format('YYYY-MM-DD'), // Format date for consistency
+          };
+          await axios.put(`/api/cooks/${cookId}`, softDelete);
+          // Show success message after deletion
+          // Swal.fire({
+          //   title: 'Deleted!',
+          //   text: 'Your file has been deleted.',
+          //   icon: 'success',
+          // });
+          // Redirect to /cooks after successful deletion
+          history.push('/cooks');
+        } catch (error) {
+          console.error('Error deleting cook:', error);
+          // Show error message if deletion fails
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to delete cook.',
+            icon: 'error',
+          });
+        }
+      }
+    });
   };
 
   const handleEditToggle = () => {
@@ -251,10 +287,16 @@ function CookDetails() {
             {user.id === formData.user_id && (
               <>
                 <button className='btn' onClick={handleEditToggle}>
-                  Edit
+                  {/* Edit */}
+                  <img className='speech-bubble' src='../images/edit-24.png' alt='Comment bubble' />
                 </button>
                 <button className='btn' onClick={handleDeleteCook}>
-                  Delete
+                  {/* Delete */}
+                  <img
+                    className='speech-bubble'
+                    src='../images/delete-24.png'
+                    alt='Comment bubble'
+                  />
                 </button>
               </>
             )}

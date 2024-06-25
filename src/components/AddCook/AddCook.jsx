@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useScript } from '../../hooks/useScript';
+import './AddCook.css';
 
 const AddCookForm = () => {
   const [cookName, setCookName] = useState('');
@@ -93,16 +94,17 @@ const AddCookForm = () => {
     <div className='view-details'>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Cook Name:</label>
+          {/* <label>Cook Name:</label> */}
           <input
             type='text'
             value={cookName}
+            placeholder='Add a cook name'
             onChange={(e) => setCookName(e.target.value)}
             required
           />
         </div>
         <div>
-          <label>Cook Date:</label>
+          {/* <label>Cook Date:</label> */}
           <input
             type='date'
             value={cookDate}
@@ -111,18 +113,19 @@ const AddCookForm = () => {
           />
         </div>
         <div>
-          <label>Location:</label>
+          {/* <label>Location:</label> */}
           <input
             type='text'
             value={location}
+            placeholder='Add your location'
             onChange={(e) => setLocation(e.target.value)}
             required
           />
         </div>
         <div>
-          <label>Cook Rating:</label>
+          {/* <label>Cook Rating:</label> */}
           <select value={cookRating} onChange={(e) => setCookRating(e.target.value)} required>
-            <option value=''>Select Rating</option>
+            <option value=''>Rate your finished product</option>
             {ratingOptions.map((option) => (
               <option key={option.id} value={option.id}>
                 {option.rating}
@@ -131,14 +134,14 @@ const AddCookForm = () => {
           </select>
         </div>
         <div>
-          <label>Recipe or Notes:</label>
-          <textarea value={recipeNotes} onChange={(e) => setRecipeNotes(e.target.value)} required />
+          {/* <label>Recipe or Notes:</label> */}
+          <textarea value={recipeNotes} placeholder='Add your recipe or notes' onChange={(e) => setRecipeNotes(e.target.value)} required />
         </div>
         <div>
           <div>
             {/* <h2>Profile Image Upload</h2> */}
             {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
-            <button type='button' onClick={openWidget}>
+            <button type='button' className='btn' onClick={openWidget}>
               Upload Images
             </button>
           </div>
@@ -155,7 +158,9 @@ const AddCookForm = () => {
               ))}
             </div>
           </div>
-          <button type='submit'>Submit</button>
+          <button type='submit' className='btn'>
+            Submit
+          </button>
           {/* Fall back for adding images using the URL in the form field */}
           {/* <label>Image URLs:</label>
         {imageURLs.map((url, index) => (

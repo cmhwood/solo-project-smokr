@@ -79,16 +79,17 @@ body {
 }
 
 .container-fluid .btn {
-  margin-top: .5rem;
-  margin-right: .5rem;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
   color: #eeeeee;
   background-color: #2f4f4f;
 }
 
 .btn {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   color: #eeeeee;
   background-color: #2f4f4f;
+  width: 100%;
 }
 
 .card {

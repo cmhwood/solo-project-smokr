@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import moment from 'moment';
 import axios from 'axios';
 import './CookDetailPage.css';
 import { useScript } from '../../hooks/useScript';
 import { useSelector } from 'react-redux';
-import moment from 'moment';
+
 
 function CookDetails() {
   const user = useSelector((store) => store.user);
@@ -49,7 +50,7 @@ function CookDetails() {
       setFormData({
         user_id,
         cook_name,
-        cook_date: moment(cook_date).format('YYYY-MM-DD'),
+        cook_date: moment(cook_date).format('MMMM Do, YYYY'),
         location,
         recipe_notes,
         cook_rating,
@@ -73,19 +74,21 @@ function CookDetails() {
 
   const openWidget = () => {
     if (window.cloudinary) {
-      window.cloudinary.createUploadWidget(
-        {
-          sources: ['local', 'url', 'camera'],
-          cloudName: 'ddlkh3gov',
-          uploadPreset: 'qaikv0iz',
-          multiple: 'true',
-        },
-        (error, result) => {
-          if (!error && result && result.event === 'success') {
-            setImageURLs((prevImageURLs) => [...prevImageURLs, result.info.secure_url]);
+      window.cloudinary
+        .createUploadWidget(
+          {
+            sources: ['local', 'url', 'camera'],
+            cloudName: 'ddlkh3gov',
+            uploadPreset: 'qaikv0iz',
+            multiple: 'true',
+          },
+          (error, result) => {
+            if (!error && result && result.event === 'success') {
+              setImageURLs((prevImageURLs) => [...prevImageURLs, result.info.secure_url]);
+            }
           }
-        }
-      ).open();
+        )
+        .open();
     }
   };
 
@@ -203,7 +206,7 @@ function CookDetails() {
             </div>
             <div className='form-group text-center'>
               <button type='button' className='btn btn-primary' onClick={openWidget}>
-                Upload Images
+                Upload More Images
               </button>
             </div>
             <div className='form-group'>

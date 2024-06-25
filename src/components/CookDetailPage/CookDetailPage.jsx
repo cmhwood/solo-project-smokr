@@ -288,15 +288,11 @@ function CookDetails() {
               <>
                 <button className='btn' onClick={handleEditToggle}>
                   {/* Edit */}
-                  <img className='speech-bubble' src='../images/edit-24.png' alt='Comment bubble' />
+                  <img className='speech-bubble' src='../images/edit-24.png' alt='Edit' />
                 </button>
                 <button className='btn' onClick={handleDeleteCook}>
                   {/* Delete */}
-                  <img
-                    className='speech-bubble'
-                    src='../images/delete-24.png'
-                    alt='Comment bubble'
-                  />
+                  <img className='speech-bubble' src='../images/delete-24.png' alt='Delete' />
                 </button>
               </>
             )}

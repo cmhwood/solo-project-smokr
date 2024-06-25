@@ -22,7 +22,7 @@ function FeedPage() {
       <h2 className='my-4'>What's Cookin'</h2>
       <div className='row mx-0'>
         {feeds?.map((cook) => (
-          <div key={cook.id} className='col-12 mb-4 px-0'>
+          <div key={cook.id} className='col-12 px-0'>
             <div className='card p-3 cook-card'>
               <div className='d-flex align-items-center'>
                 <img

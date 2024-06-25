@@ -90,6 +90,10 @@ const AddCookForm = () => {
     history.push('/cooks');
   };
 
+  const handleCancel = () => {
+    history.push('/feed'); // Replace '/feed' with the actual route for your FeedPage
+  };
+
   return (
     <div className='view-details'>
       <form onSubmit={handleSubmit}>
@@ -135,7 +139,12 @@ const AddCookForm = () => {
         </div>
         <div>
           {/* <label>Recipe or Notes:</label> */}
-          <textarea value={recipeNotes} placeholder='Add your recipe or notes' onChange={(e) => setRecipeNotes(e.target.value)} required />
+          <textarea
+            value={recipeNotes}
+            placeholder='Add your recipe or notes'
+            onChange={(e) => setRecipeNotes(e.target.value)}
+            required
+          />
         </div>
         <div>
           <div>
@@ -160,6 +169,9 @@ const AddCookForm = () => {
           </div>
           <button type='submit' className='btn'>
             Submit
+          </button>
+          <button type='button' className='btn' onClick={handleCancel}>
+            Cancel
           </button>
           {/* Fall back for adding images using the URL in the form field */}
           {/* <label>Image URLs:</label>

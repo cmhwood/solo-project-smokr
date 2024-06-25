@@ -25,19 +25,23 @@ function Nav() {
         {user.id && (
           <>
             <Link className='navLink' to='/user'>
-              Profile
+              <img className='speech-bubble' src='../images/user-24.png' alt='Comment bubble' />
+              {/* Profile */}
             </Link>
 
             <Link className='navLink' to='/feed'>
-              Feed
+              <img className='speech-bubble' src='../images/home-24.png' alt='Comment bubble' />
+              {/* Feed */}
             </Link>
 
             <Link className='navLink' to='/cooks'>
-              Cooks
+              <img className='speech-bubble' src='../images/salt-bae-24.png' alt='Comment bubble' />
+              {/* Cooks */}
             </Link>
 
             <Link className='navLink' to='/cooks/new'>
-              Add Cook
+              <img className='speech-bubble' src='../images/add-24.png' alt='Comment bubble' />
+              {/* Add Cook */}
             </Link>
 
             {/* <Link className='navLink' to='/info'>

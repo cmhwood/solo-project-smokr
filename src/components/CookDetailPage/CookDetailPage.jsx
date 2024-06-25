@@ -268,10 +268,30 @@ function CookDetails() {
           <h2 className='my-4'>{formData.cook_name}</h2>
 
           <div className='view-details'>
-            <p>Cook Date: {formData.cook_date}</p>
-            <p>Location: {formData.location}</p>
-            <p>Recipe Notes: {formData.recipe_notes}</p>
-            <p>Cook Rating: {formData.cook_rating_text}</p>
+            <p>
+              {/* Cook Date:  */}
+              <img className='speech-bubble' src='../images/date-24.png' alt='Date' />
+              {formData.cook_date}
+            </p>
+            <p>
+              {/* Location:  */}
+              <img className='speech-bubble' src='../images/location-24.png' alt='Location' />
+              {formData.location}
+            </p>
+            <p style={{ whiteSpace: 'pre-wrap' }}>
+              {/* Recipe Notes:  */}
+              <img
+                className='speech-bubble'
+                src='../images/knife-and-spatchula-24.png'
+                alt='Kitchen knife and spatula'
+              />
+              {formData.recipe_notes}
+            </p>
+            <p>
+              {/* Cook Rating:  */}
+              <img className='speech-bubble' src='../images/flame-24.png' alt='Flame' />
+              {formData.cook_rating_text}
+            </p>
             <div className='cook-images-detail'>
               {formData.cook_image_urls.map((url, index) => (
                 <img

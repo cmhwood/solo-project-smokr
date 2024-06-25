@@ -52,17 +52,20 @@ function UserPage() {
   return (
     <div className='container'>
       <h2>Welcome, {user.username}!</h2>
-      <p>Your ID is: {user.id}</p>
-      <div>
-        <img src={newProfileImageUrl.profile_image_url} alt='Profile' width='100' height='100' />
-
+      {/* <p>Your ID is: {user.id}</p> */}
+      <div className='profile-pic'>
+        <center>
+        <img src={newProfileImageUrl.profile_image_url} alt='Profile' width='150' height='150' />
+        </center>
+        <center>
         <div>
           <h2>Profile Image Upload</h2>
           {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
-          <button type='button' onClick={openWidget}>
+          <button className='pick-btn' type='button' onClick={openWidget}>
             Pick File
           </button>
         </div>
+        </center>
         <br />
         {/* <div>
           <input
@@ -72,10 +75,14 @@ function UserPage() {
             onChange={(e) => setNewProfileImageUrl(e.target.value)}
           />
           </div> */}
-        <button onClick={handleProfileImageUpdate}>Update Profile Image</button>
+          <center>
+        <button className='profile-btn' onClick={handleProfileImageUpdate}>Update Profile Image</button>
+        </center>
       </div>
+      <center>
       <br />
-      <LogOutButton className='btn' />
+      <LogOutButton className='log-out-btn' />
+      </center>
     </div>
   );
 }

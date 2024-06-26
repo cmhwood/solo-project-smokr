@@ -133,6 +133,8 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
 
     // Determine which images to insert
     const imagesToInsert = cook_image_urls.filter((url) => !existingImageUrls.includes(url));
+    // Determine which images to delete
+    const imagesToDelete = existingImageUrls.filter((url) => !cook_image_urls.includes(url));
 
     // Insert new images that are not already in the database
     if (imagesToInsert.length > 0) {
@@ -142,6 +144,16 @@ router.put('/:id', rejectUnauthenticated, async (req, res) => {
       `;
       await pool.query(insertImageQuery, [cookId, imagesToInsert]);
       console.log('Inserted images:', imagesToInsert);
+    }
+
+    // Delete images that are no longer in the updated list
+    if (imagesToDelete.length > 0) {
+      const deleteImageQuery = `
+        DELETE FROM "cook_images"
+        WHERE "cook_id" = $1 AND "image_url" = ANY($2::text[]);
+      `;
+      await pool.query(deleteImageQuery, [cookId, imagesToDelete]);
+      console.log('Deleted images:', imagesToDelete);
     }
 
     // Commit the transaction

@@ -6,7 +6,6 @@ import './CookDetailPage.css';
 import { useScript } from '../../hooks/useScript';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-// import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 function CookDetails() {
   const user = useSelector((store) => store.user);
@@ -59,6 +58,7 @@ function CookDetails() {
         is_active,
         cook_image_urls: cook_images || [],
       });
+      setImageURLs(cook_images || []);
     } catch (error) {
       console.error('Error fetching cook details:', error);
     }
@@ -181,6 +181,10 @@ function CookDetails() {
     }
   };
 
+  const handleDeleteImage = (index) => {
+    setImageURLs(imageURLs.filter((_, i) => i !== index));
+  };
+
   return (
     <div className='cook-details'>
       {editMode ? (
@@ -240,7 +244,7 @@ function CookDetails() {
               ></textarea>
             </div>
             <div className='form-group text-center'>
-              <button type='button' className='btn btn-primary' onClick={openWidget}>
+              <button type='button' className='btn' onClick={openWidget}>
                 Upload More Images
               </button>
             </div>
@@ -249,6 +253,13 @@ function CookDetails() {
                 {imageURLs.map((url, index) => (
                   <div key={index} className='image-preview'>
                     <img src={url} alt={`Uploaded ${index}`} />
+                    <button
+                      type='button'
+                      className='btn btn-danger btn-sm delete-button'
+                      onClick={() => handleDeleteImage(index)}
+                    >
+                      X
+                    </button>
                   </div>
                 ))}
               </div>
@@ -354,7 +365,11 @@ function CookDetails() {
                     placeholder='Add a comment...'
                     className='form-control'
                   ></textarea>
-                  <button className='btn btn-primary mt-2' onClick={handleAddComment}>
+                  <button
+                    className='btn'
+                    onClick={handleAddComment}
+                    disabled={!newComment.trim()} // Disable button if newComment is empty or whitespace
+                  >
                     Post Comment
                   </button>
                 </div>

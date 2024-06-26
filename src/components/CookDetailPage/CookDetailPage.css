@@ -59,19 +59,8 @@ body {
 .edit-form select.form-control,
 .edit-form textarea.form-control {
   width: 100%;
-  /* background: #eeeeee; */
-}
-
-.image-preview {
-  position: relative;
-  display: inline-block;
-  margin: 5px;
-}
-
-.image-preview img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
+  color: #172727;
+  background: #eeeeee;
 }
 
 .edit-form .btn {
@@ -162,4 +151,46 @@ body {
   margin-top: 16px;
   background-color: #172727;
   /* padding: 16px; */
+}
+
+.d-flex.flex-wrap.justify-content-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image-preview {
+  position: relative;
+  width: calc(50% - 10px); /* Two columns with a gap */
+  margin: 5px;
+}
+
+.image-preview img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  /* background-color: red; */
+  color: #eeeeee;
+  border: none;
+  border-radius: 50%;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  background-color: #2f4f4f;
+  color: #eeeeee;
+  cursor: not-allowed;
 }

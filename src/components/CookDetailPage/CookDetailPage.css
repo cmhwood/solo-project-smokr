@@ -63,6 +63,11 @@ body {
   background: #eeeeee;
 }
 
+textarea.form-control {
+  min-height: 100px; /* Initial height */
+  resize: vertical; /* Allow vertical resizing */
+}
+
 .edit-form .btn {
   /* margin: 5px; */
   color: #eeeeee;

@@ -241,8 +241,11 @@ function CookDetails() {
                 value={formData.recipe_notes}
                 onChange={handleFormDataChange}
                 placeholder='Recipe Notes'
+                rows={formData.recipe_notes.split('\n').length} // Set initial rows based on content
+                style={{ minHeight: '100px', resize: 'vertical' }} // Apply CSS styles
               ></textarea>
             </div>
+
             <div className='form-group text-center'>
               <button type='button' className='btn' onClick={openWidget}>
                 Upload More Images

@@ -13,6 +13,7 @@
   margin-top: 10px;
   box-sizing: border-box;
   z-index: 1000; /* Ensure the navbar is above other content */
+  opacity: 0.8;
 }
 
 .nav > div {

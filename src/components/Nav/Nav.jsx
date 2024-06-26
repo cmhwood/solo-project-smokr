@@ -31,6 +31,10 @@ function Nav() {
                 <img className='nav-profile-icon' src='../images/user-24.png' alt='Profile icon' />
               )}
             </Link>
+            {/* <Link className='navLink' to='/user'>
+              <img className='speech-bubble' src='../images/user-24.png' alt='Comment bubble' />
+              Profile
+            </Link> */}
 
             <Link className='navLink' to='/feed'>
               <img className='speech-bubble' src='../images/home-24.png' alt='Comment bubble' />

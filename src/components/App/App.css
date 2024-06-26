@@ -51,6 +51,13 @@ Button
   color: #eeeeee;
   background-color: #172727;
   width: auto;
+  /* width: 100%; */
+  margin: 5px 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn_sizeMin {

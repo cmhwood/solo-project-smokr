@@ -55,18 +55,18 @@ function UserPage() {
       {/* <p>Your ID is: {user.id}</p> */}
       <div className='profile-pic'>
         <center>
-        <img src={newProfileImageUrl.profile_image_url} alt='Profile' width='150' height='150' />
+          <img src={newProfileImageUrl.profile_image_url} alt='Profile' width='150' height='150' />
         </center>
         <center>
-        <div>
-          <h2>Profile Image Upload</h2>
-          {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
-          <button className='pick-btn' type='button' onClick={openWidget}>
-            Pick File
-          </button>
-        </div>
+          <div>
+            <h2>Profile Image Upload</h2>
+            {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
+            <button className='pick-btn' type='button' onClick={openWidget}>
+              Select Profile Image
+            </button>
+          </div>
         </center>
-        <br />
+        {/* <br /> */}
         {/* <div>
           <input
             type='text'
@@ -75,13 +75,15 @@ function UserPage() {
             onChange={(e) => setNewProfileImageUrl(e.target.value)}
           />
           </div> */}
-          <center>
-        <button className='profile-btn' onClick={handleProfileImageUpdate}>Update Profile Image</button>
+        <center>
+          <button className='profile-btn' onClick={handleProfileImageUpdate}>
+            Save
+          </button>
         </center>
       </div>
       <center>
-      <br />
-      <LogOutButton className='log-out-btn' />
+        <br />
+        <LogOutButton className='log-out-btn' />
       </center>
     </div>
   );

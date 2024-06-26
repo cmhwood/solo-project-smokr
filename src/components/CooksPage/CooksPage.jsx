@@ -19,7 +19,7 @@ const CooksPage = () => {
 
   return (
     <div className='container-fluid px-0'>
-      <h2 className='my-4'>My Cooks</h2>
+      <h2 className='my-4'>My Smokr</h2>
       <div className='row mx-0'>
         {cooks.map((cook) => (
           <div key={cook.id} className='col-12 px-0'>
@@ -46,27 +46,27 @@ const CooksPage = () => {
                   </p>
                 </div>
               </div>
-                {/* <div className='mt-3'> */}
-                {/* Not showing rating on cooks page */}
-                {/* <p> 
+              {/* <div className='mt-3'> */}
+              {/* Not showing rating on cooks page */}
+              {/* <p> 
                   <strong>Rating:</strong> {cook.cook_rating}
                 </p> */}
-                {/* <div> */}
-                <div className='cook-images'>
-                    {/* <strong>Cook Images:</strong> */}
-                    {cook.cook_images?.slice(0, 2).map((url, index) => (
-                      <img
-                        key={index}
-                        src={url}
-                        alt={`Cook Image ${index}`}
-                        className={`cook-image ${
-                          index === 0 ? 'cook-image-large' : 'cook-image-large'
-                        }`}
-                      />
-                    ))}
-                    {/* </div> */}
-                </div>
-                {/* <p>
+              {/* <div> */}
+              <div className='cook-images'>
+                {/* <strong>Cook Images:</strong> */}
+                {cook.cook_images?.slice(0, 2).map((url, index) => (
+                  <img
+                    key={index}
+                    src={url}
+                    alt={`Cook Image ${index}`}
+                    className={`cook-image ${
+                      index === 0 ? 'cook-image-large' : 'cook-image-large'
+                    }`}
+                  />
+                ))}
+                {/* </div> */}
+              </div>
+              {/* <p>
                 <strong>Recipe Notes:</strong> {cook.recipe_notes}
                 </p> */}
               {/* </div> */}

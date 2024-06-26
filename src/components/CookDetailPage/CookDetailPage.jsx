@@ -317,19 +317,33 @@ function CookDetails() {
               </>
             )}
             <div className='comments-section'>
-              <h2 className='comment'>
+              <div className='comment-header'>
                 <img
-                  className='speech-bubble'
+                  className='com-speech-bubble'
                   src='../images/color-bubble-50.png'
                   alt='Comment bubble'
                 />
-                Comment
-              </h2>
+                <h2 className='comment-title'>Comments</h2>
+              </div>
               {comments.map((comment) => (
                 <div key={comment.comment_id} className='comment'>
-                  <p>
-                    <strong>{comment.username}:</strong> {comment.comment_text}
-                  </p>
+                  <div className='comment-user'>
+                    {user.profile_image_url ? (
+                      <img
+                        className='com-profile-image'
+                        src={user.profile_image_url}
+                        alt='Profile'
+                      />
+                    ) : (
+                      <img
+                        className='com-profile-icon'
+                        src='../images/user-24.png'
+                        alt='Profile icon'
+                      />
+                    )}
+                    <strong>{comment.username}</strong>
+                  </div>
+                  <div className='comment-text'>{comment.comment_text}</div>
                 </div>
               ))}
               {user && (

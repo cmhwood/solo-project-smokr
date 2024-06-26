@@ -129,7 +129,9 @@ const AddCookForm = () => {
         <div>
           {/* <label>Cook Rating:</label> */}
           <select value={cookRating} onChange={(e) => setCookRating(e.target.value)} required>
-            <option value=''>Rate your finished product</option>
+            <option color='#eeeeee' value=''>
+              Rate your finished product
+            </option>
             {ratingOptions.map((option) => (
               <option key={option.id} value={option.id}>
                 {option.rating}

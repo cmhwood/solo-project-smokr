@@ -32,3 +32,14 @@
 .navLink:hover {
   color: #eeeeee;
 }
+
+.nav-profile-image {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.nav-profile-icon {
+  width: 25px;
+  height: 25px;
+}

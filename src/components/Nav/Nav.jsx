@@ -25,8 +25,11 @@ function Nav() {
         {user.id && (
           <>
             <Link className='navLink' to='/user'>
-              <img className='speech-bubble' src='../images/user-24.png' alt='Comment bubble' />
-              {/* Profile */}
+              {user.profile_image_url ? (
+                <img className='nav-profile-image' src={user.profile_image_url} alt='Profile' />
+              ) : (
+                <img className='nav-profile-icon' src='../images/user-24.png' alt='Profile icon' />
+              )}
             </Link>
 
             <Link className='navLink' to='/feed'>

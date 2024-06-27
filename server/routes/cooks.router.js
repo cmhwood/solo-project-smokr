@@ -48,24 +48,30 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 // This route *should* add a cook for the logged in user
 router.post('/', rejectUnauthenticated, async (req, res) => {
   try {
+    // Start a transaction
     await pool.query('BEGIN');
     console.log('Transaction started');
 
+    // Destructure variables from the request body
     const { cook_name, cook_date, location, recipe_notes, cook_rating, cook_image_urls } = req.body;
     const userId = req.user.id;
 
+    // Insert cook data into the "cooks" table
     const insertCookResult = await pool.query(
       `INSERT INTO "cooks" ("cook_name", "user_id", "cook_date", "location", "recipe_notes", "cook_rating")
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`,
       [cook_name, userId, cook_date, location, recipe_notes, cook_rating]
     );
 
+    // Get the ID of the newly inserted cook
     const newCookId = insertCookResult.rows[0].id;
 
+    // Check if images are an array
     if (Array.isArray(cook_image_urls) && cook_image_urls.length > 0) {
       for (let index = 0; index < cook_image_urls.length; index++) {
         const imageUrl = cook_image_urls[index];
 
+        // Insert each image into the "cook_images" table
         await pool.query(`INSERT INTO "cook_images" ("cook_id", "image_url") VALUES ($1, $2);`, [
           newCookId,
           imageUrl,

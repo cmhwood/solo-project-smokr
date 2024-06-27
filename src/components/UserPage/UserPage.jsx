@@ -53,9 +53,15 @@ function UserPage() {
     <div className='container'>
       <h2>Welcome, {user.username}!</h2>
       {/* <p>Your ID is: {user.id}</p> */}
-      <div className='profile-pic'>
+      <div className='profile'>
         <center>
-          <img src={newProfileImageUrl.profile_image_url} alt='Profile' width='150' height='150' />
+          <img
+            className='profile-pic'
+            src={newProfileImageUrl.profile_image_url}
+            alt='Profile'
+            width='150'
+            height='150'
+          />
         </center>
         <center>
           <div>

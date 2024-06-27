@@ -51,7 +51,7 @@ const CooksPage = () => {
                     <p className='mb-1'>{cook.location}</p>
                   </div>
                 </div>
-                <div className='cook-images'>
+                <div className='cook-images' onClick={() => handleCookClick(cook.id)}>
                   {cook.cook_images?.slice(0, 2).map((url, index) => (
                     <img
                       key={index}

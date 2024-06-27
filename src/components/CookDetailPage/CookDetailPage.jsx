@@ -240,7 +240,7 @@ function CookDetails() {
                 name='recipe_notes'
                 value={formData.recipe_notes}
                 onChange={handleFormDataChange}
-                placeholder='Recipe Notes'
+                placeholder='Recipes & Notes'
                 rows={formData.recipe_notes.split('\n').length} // Set initial rows based on content
                 style={{ minHeight: '100px', resize: 'vertical' }} // Apply CSS styles
               ></textarea>
@@ -351,7 +351,7 @@ function CookDetails() {
                     ) : (
                       <img
                         className='com-profile-icon'
-                        src='../images/user-24.png'
+                        src='./images/default-profile.jpg'
                         alt='Profile icon'
                       />
                     )}

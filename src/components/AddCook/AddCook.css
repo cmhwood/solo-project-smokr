@@ -2,6 +2,10 @@ body {
   font-family: Arial, sans-serif;
 }
 
+h3 {
+  text-align: center;
+}
+
 .view-details {
   border-radius: 8px;
   padding: 16px;

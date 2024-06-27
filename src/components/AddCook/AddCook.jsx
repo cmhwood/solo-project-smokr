@@ -95,88 +95,90 @@ const AddCookForm = () => {
   };
 
   return (
-    <div className='view-details'>
-      <form onSubmit={handleSubmit}>
-        <div>
-          {/* <label>Cook Name:</label> */}
-          <input
-            type='text'
-            value={cookName}
-            placeholder='Add a cook name'
-            onChange={(e) => setCookName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          {/* <label>Cook Date:</label> */}
-          <input
-            type='date'
-            value={cookDate}
-            onChange={(e) => setCookDate(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          {/* <label>Location:</label> */}
-          <input
-            type='text'
-            value={location}
-            placeholder='Add your location'
-            onChange={(e) => setLocation(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          {/* <label>Cook Rating:</label> */}
-          <select value={cookRating} onChange={(e) => setCookRating(e.target.value)} required>
-            <option color='#eeeeee' value=''>
-              Rate your finished product
-            </option>
-            {ratingOptions.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.rating}
+    <div className='container-fluid px-0'>
+      <h2 className='my-4'>What's on my Smokr</h2>
+      <div className='view-details'>
+        <form onSubmit={handleSubmit}>
+          <div>
+            {/* <label>Cook Name:</label> */}
+            <input
+              type='text'
+              value={cookName}
+              placeholder='Add a cook name'
+              onChange={(e) => setCookName(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            {/* <label>Cook Date:</label> */}
+            <input
+              type='date'
+              value={cookDate}
+              onChange={(e) => setCookDate(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            {/* <label>Location:</label> */}
+            <input
+              type='text'
+              value={location}
+              placeholder='Add your location'
+              onChange={(e) => setLocation(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            {/* <label>Cook Rating:</label> */}
+            <select value={cookRating} onChange={(e) => setCookRating(e.target.value)} required>
+              <option color='#eeeeee' value=''>
+                Rate your finished product
               </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          {/* <label>Recipe or Notes:</label> */}
-          <textarea
-            value={recipeNotes}
-            placeholder='Add your recipe or notes'
-            onChange={(e) => setRecipeNotes(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <div>
-            {/* <h2>Profile Image Upload</h2> */}
-            {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
-            <button type='button' className='btn' onClick={openWidget}>
-              Upload Images
-            </button>
-          </div>
-          <div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {imageURLs.map((url, index) => (
-                <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
-                  <img
-                    src={url}
-                    alt={`Uploaded ${index}`}
-                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                  />
-                </div>
+              {ratingOptions.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.rating}
+                </option>
               ))}
-            </div>
+            </select>
           </div>
-          <button type='submit' className='btn'>
-            Submit
-          </button>
-          <button type='button' className='btn' onClick={handleCancel}>
-            Cancel
-          </button>
-          {/* Fall back for adding images using the URL in the form field */}
-          {/* <label>Image URLs:</label>
+          <div>
+            {/* <label>Recipe or Notes:</label> */}
+            <textarea
+              value={recipeNotes}
+              placeholder='Add your recipe or notes'
+              onChange={(e) => setRecipeNotes(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <div>
+              {/* <h2>Profile Image Upload</h2> */}
+              {useScript('https://widget.cloudinary.com/v2.0/global/all.js')}
+              <button type='button' className='btn' onClick={openWidget}>
+                Upload Images
+              </button>
+            </div>
+            <div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                {imageURLs.map((url, index) => (
+                  <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+                    <img
+                      src={url}
+                      alt={`Uploaded ${index}`}
+                      style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <button type='submit' className='btn'>
+              Submit
+            </button>
+            <button type='button' className='btn' onClick={handleCancel}>
+              Cancel
+            </button>
+            {/* Fall back for adding images using the URL in the form field */}
+            {/* <label>Image URLs:</label>
         {imageURLs.map((url, index) => (
           <div key={index}>
             <input
@@ -192,8 +194,9 @@ const AddCookForm = () => {
         <button type='button' onClick={addImageField}>
           Add Another Image
         </button> */}
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

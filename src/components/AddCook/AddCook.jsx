@@ -55,7 +55,7 @@ const AddCookForm = () => {
         )
         .open();
   };
-  console.log('what are the images', imageURLs);
+  // console.log('what are the images', imageURLs);
 
   // Fall back for adding images using the URL in the form field
   // const handleImageChange = (index, value) => {
@@ -95,7 +95,7 @@ const AddCookForm = () => {
   };
 
   const handleCancel = () => {
-    history.push('/feed'); // Replace '/feed' with the actual route for your FeedPage
+    history.push('/feed');
   };
 
   return (
@@ -117,6 +117,7 @@ const AddCookForm = () => {
             {/* <label>Cook Date:</label> */}
             <input
               type='date'
+              color='#eeeeee'
               value={cookDate}
               onChange={(e) => setCookDate(e.target.value)}
               required
@@ -176,7 +177,7 @@ const AddCookForm = () => {
               </div>
             </div>
             <button type='submit' className='btn'>
-              Submit
+              Save
             </button>
             <button type='button' className='btn' onClick={handleCancel}>
               Cancel

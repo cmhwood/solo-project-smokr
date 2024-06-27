@@ -13,6 +13,10 @@ const CooksPage = () => {
     dispatch({ type: 'FETCH_COOKS' }); // Fetch cooks when component mounts
   }, [dispatch]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleCookClick = (cookId) => {
     history.push(`/cook/${cookId}`); // Navigate to cook details page
   };

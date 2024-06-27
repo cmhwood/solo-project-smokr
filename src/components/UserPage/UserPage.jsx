@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -34,6 +34,10 @@ function UserPage() {
         )
         .open();
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleProfileImageUpdate = (event) => {
     event.preventDefault();

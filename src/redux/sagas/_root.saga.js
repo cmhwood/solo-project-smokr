@@ -6,6 +6,7 @@ import cooksSaga from './cooks.saga';
 import feedSaga from './feed.saga';
 import cookDetailSaga from './cookDetail.saga';
 import { commentsSaga } from './comments.saga';
+import watchLikeCook from './likeCook.saga';
 
 
 // rootSaga is the primary saga.
@@ -24,5 +25,6 @@ export default function* rootSaga() {
     feedSaga(),
     cookDetailSaga(),
     commentsSaga(),
+    watchLikeCook(),
   ]);
 }

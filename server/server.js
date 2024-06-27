@@ -13,6 +13,7 @@ const cookRouter = require('./routes/cooks.router');
 const feedRouter = require('./routes/feed.router');
 const ratingRouter = require('./routes/ratings.router');
 const commentsRouter = require('./routes/comments.router');
+const likesRouter = require('./routes/likes.router');
 
 // Express Middleware
 app.use(express.json());
@@ -32,6 +33,7 @@ app.use('/api/cooks', cookRouter);
 app.use('/api/feed', feedRouter);
 app.use('/api', ratingRouter);
 app.use('/api/comments', commentsRouter);
+app.use('/api/likes', likesRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {

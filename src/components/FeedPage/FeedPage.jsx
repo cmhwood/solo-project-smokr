@@ -21,6 +21,10 @@ function FeedPage() {
     history.push(`/cook/${cookId}`);
   };
 
+  const handleLikeClick = (cookId) => {
+    dispatch({ type: 'LIKE_COOK', payload: cookId });
+  };
+
   return (
     <div className='container-fluid px-0'>
       <h2 className='my-4'>What's Cookin'</h2>
@@ -65,6 +69,12 @@ function FeedPage() {
                       />
                     ))}
                   </div>
+                </div>
+                <div className='like-container'>
+                  <button className='like-button' onClick={() => handleLikeClick(cook.id)}>
+                    Like
+                  </button>
+                  <span className='like-count'>{cook.like_count} Likes</span>
                 </div>
               </div>
             </div>

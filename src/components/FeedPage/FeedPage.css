@@ -63,3 +63,48 @@ h2 {
     max-height: 100px; /* Adjust height as needed */
   }
 }
+
+/* .like-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: #2f4f4f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.like-button:hover {
+  background-color: #ff1a1a;
+} */
+
+.like-button {
+  background-color: #ff9800;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.like-button:hover {
+  background-color: #e68a00;
+}
+
+.like-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.like-count {
+  margin-left: 10px;
+}

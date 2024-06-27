@@ -7,9 +7,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
   const { cookId } = req.body;
   const userId = req.user.id;
 
-  const query = `INSERT INTO "cookLikes" ("post_id", "user_id") VALUES ($1, $2)
-                 ON CONFLICT ("post_id", "user_id") DO NOTHING;
-                 UPDATE "cooks" SET "like_count" = "like_count" + 1 WHERE "id" = $1;`;
+  const query = `INSERT INTO "cookLikes" ("post_id", "user_id") VALUES ($1, $2)`;
 
   pool
     .query(query, [cookId, userId])
@@ -19,5 +17,19 @@ router.post('/', rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
+
+// GET request to fetch likes
+router.get('/', rejectUnauthenticated, (req, res) => {
+  const query = 'SELECT * FROM "cookLikes"';
+  pool
+    .query(query)
+    .then((result) => res.send(result.rows))
+    .catch((error) => {
+      console.error('Error fetching likes:', error);
+      res.sendStatus(500);
+    });
+});
+
+module.exports = router;
 
 module.exports = router;

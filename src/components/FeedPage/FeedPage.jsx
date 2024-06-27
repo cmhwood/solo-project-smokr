@@ -7,7 +7,7 @@ function FeedPage() {
   const dispatch = useDispatch();
   const feeds = useSelector((store) => store.feedReducer);
   const history = useHistory();
-  const cookRatings = useSelector((store) => store.cookRatings);
+  // const cookRatings = useSelector((store) => store.cookRatings);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_COOKS' });
@@ -23,6 +23,7 @@ function FeedPage() {
 
   const handleLikeClick = (cookId) => {
     dispatch({ type: 'LIKE_COOK', payload: cookId });
+    dispatch({ type: 'FETCH_COOKS' });
   };
 
   return (
@@ -72,9 +73,15 @@ function FeedPage() {
                 </div>
                 <div className='like-container'>
                   <button className='like-button' onClick={() => handleLikeClick(cook.id)}>
-                    Like
+                    {/* Likes */}
+                    <img
+                      className='speech-bubble'
+                      src='../images/thumbs-up-24.png'
+                      alt='Add'
+                    />{' '}
+                    {cook.like_count}
                   </button>
-                  <span className='like-count'>{cook.like_count} Likes</span>
+                  {/* <span className='like-count'>{cook.like_count}</span> */}
                 </div>
               </div>
             </div>

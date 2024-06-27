@@ -1,12 +1,24 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, all } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* fetchCooks() {
   try {
-    const response = yield axios.get('/api/feed');
-    yield put({ type: 'SET_ALL_COOKS', payload: response.data });
+    const [cooksResponse, likesResponse] = yield all([
+      axios.get('/api/feed'), // Fetch cooks
+      axios.get('/api/likes'), // Fetch likes for cooks
+    ]);
+
+    console.log('Cooks response:', cooksResponse.data);
+    console.log('Likes response:', likesResponse.data);
+
+    const cooks = cooksResponse.data.map((cook) => ({
+      ...cook,
+      like_count: likesResponse.data.filter((like) => like.post_id === cook.id).length,
+    }));
+
+    yield put({ type: 'SET_ALL_COOKS', payload: cooks });
   } catch (error) {
-    console.error('Error getting cooks');
+    console.error('Error getting cooks:', error);
   }
 }
 

@@ -20,6 +20,7 @@ import AddCook from '../AddCook/AddCook';
 import CookDetailPage from '../CookDetailPage/CookDetailPage';
 
 import './App.css';
+import CookLikesPage from '../CookLikes/CookLikes';
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,10 @@ function App() {
             <CookDetailPage />
           </ProtectedRoute>
 
+          <ProtectedRoute exact path='/likes'>
+            <CookLikesPage />
+          </ProtectedRoute>
+
           <Route exact path='/login'>
             {user.id ? <Redirect to='/feed' /> : <LoginPage />}
           </Route>
@@ -90,7 +95,7 @@ function App() {
           </Route>
         </Switch>
         {/* <Footer /> */}
-        <br/>
+        <br />
       </div>
     </Router>
   );

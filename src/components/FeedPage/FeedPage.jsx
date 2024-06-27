@@ -48,7 +48,7 @@ function FeedPage() {
                   <strong>Rating:</strong> {cook.cook_rating}
                 </p>
                 <div>
-                  <div className='cook-images'>
+                  <div className='cook-images' onClick={() => handleCookClick(cook.id)}>
                     {/* <strong className='text-white'>Cook Images:</strong> */}
                     {cook.cook_images?.slice(0, 2).map((url, index) => (
                       <img

@@ -33,6 +33,10 @@ function CookDetails() {
     fetchComments();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fetchCookDetails = async () => {
     try {
       const response = await axios.get(`/api/cooks/${cookId}`);

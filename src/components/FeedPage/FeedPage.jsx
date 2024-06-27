@@ -13,6 +13,10 @@ function FeedPage() {
     dispatch({ type: 'FETCH_COOKS' });
   }, [dispatch]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleCookClick = (cookId) => {
     history.push(`/cook/${cookId}`);
   };

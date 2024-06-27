@@ -28,6 +28,10 @@ const AddCookForm = () => {
     fetchRatings();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const openWidget = () => {
     !!window.cloudinary &&
       window.cloudinary

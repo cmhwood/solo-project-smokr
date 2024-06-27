@@ -95,6 +95,18 @@ h3 {
     font-size: 14px;
   }
 
+  input[type='text']::placeholder {
+    color: black;
+  }
+
+  input[type='date']::placeholder {
+    color: black;
+  }
+
+  textarea::placeholder {
+    color: black;
+  }
+
   .view-details .btn {
     width: 100%;
     margin: 5px 0;

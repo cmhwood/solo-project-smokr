@@ -179,21 +179,21 @@ const AddCookForm = () => {
             </button>
             {/* Fall back for adding images using the URL in the form field */}
             {/* <label>Image URLs:</label>
-        {imageURLs.map((url, index) => (
-          <div key={index}>
-            <input
+              {imageURLs.map((url, index) => (
+              <div key={index}>
+              <input
               type='text'
               value={url}
               onChange={(e) => handleImageChange(index, e.target.value)}
-            />
-            <button type='button' onClick={() => removeImageField(index)}>
+              />
+              <button type='button' onClick={() => removeImageField(index)}>
               Remove
-            </button>
-          </div>
-        ))}
-        <button type='button' onClick={addImageField}>
-          Add Another Image
-        </button> */}
+              </button>
+              </div>
+              ))}
+              <button type='button' onClick={addImageField}>
+              Add Another Image
+            </button> */}
           </div>
         </form>
       </div>

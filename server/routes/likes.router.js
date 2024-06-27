@@ -19,17 +19,36 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 });
 
 // GET request to fetch likes
-router.get('/', rejectUnauthenticated, (req, res) => {
-  const query = 'SELECT * FROM "cookLikes"';
-  pool
-    .query(query)
-    .then((result) => res.send(result.rows))
-    .catch((error) => {
-      console.error('Error fetching likes:', error);
-      res.sendStatus(500);
-    });
+router.get('/', async (req, res) => {
+  try {
+    const query = `
+        SELECT "cookLikes".post_id, "cookLikes".user_id, "user".profile_image_url 
+        FROM "cookLikes"
+        JOIN "user" ON "cookLikes".user_id = "user".id
+      `;
+    const result = await pool.query(query);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error getting likes:', err);
+    res.sendStatus(500);
+  }
 });
 
-module.exports = router;
+router.get('/:cookId', async (req, res) => {
+  const { cookId } = req.params;
+  try {
+    const query = `
+        SELECT "cookLikes".user_id, "user".profile_image_url, "user".username 
+        FROM "cookLikes"
+        JOIN "user" ON "cookLikes".user_id = "user".id
+        WHERE "cookLikes".post_id = $1
+      `;
+    const result = await pool.query(query, [cookId]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error getting liked users:', err);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;

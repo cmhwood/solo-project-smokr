@@ -59,26 +59,10 @@ h2 {
 /* Mobile-specific styles */
 @media (max-width: 576px) {
   .cook-image-small {
-    width: calc(50% - 5px); /* Adjust for margin-right */
-    max-height: 100px; /* Adjust height as needed */
+    width: calc(50% - 5px);
+    max-height: 100px;
   }
 }
-
-/* .like-button {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  padding: 10px 20px;
-  background-color: #2f4f4f;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.like-button:hover {
-  background-color: #ff1a1a;
-} */
 
 .like-button {
   background-color: #2f4f4f;
@@ -90,6 +74,7 @@ h2 {
   display: inline-block;
   font-size: 14px;
   margin: 2px 2px;
+  margin-left: 6px;
   cursor: pointer;
   border-radius: 5px;
 }
@@ -107,4 +92,16 @@ h2 {
 
 .like-count {
   margin-left: 10px;
+}
+
+.liked-users {
+  display: flex;
+  align-items: center;
+  /* margin-right: 10px; */
+}
+
+.liked-user-profile {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }

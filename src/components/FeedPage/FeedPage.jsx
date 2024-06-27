@@ -23,7 +23,7 @@ function FeedPage() {
 
   const handleLikeClick = (cookId) => {
     dispatch({ type: 'LIKE_COOK', payload: cookId });
-    dispatch({ type: 'FETCH_COOKS' });
+    // dispatch({ type: 'FETCH_COOKS' });
   };
 
   return (
@@ -72,14 +72,21 @@ function FeedPage() {
                   </div>
                 </div>
                 <div className='like-container'>
+                  <div className='liked-users'>
+                    {cook.likedUsers?.map((user, index) => (
+                      <img
+                        key={index}
+                        src={user.profile_image_url}
+                        alt='User Profile'
+                        className='liked-user-profile rounded-circle'
+                      />
+                    ))}
+                  </div>
                   <button className='like-button' onClick={() => handleLikeClick(cook.id)}>
                     {/* Likes */}
-                    <img
-                      className='speech-bubble'
-                      src='../images/thumbs-up-24.png'
-                      alt='Add'
-                    />{' '}
-                    {cook.like_count}
+                    <img className='thumb-bubble' src='../images/thumbs-up-24.png' alt='Add' />
+                    {/* {' '} */}
+                    {/* {cook.like_count} */}
                   </button>
                   {/* <span className='like-count'>{cook.like_count}</span> */}
                 </div>

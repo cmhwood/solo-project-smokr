@@ -7,7 +7,7 @@ import feedSaga from './feed.saga';
 import cookDetailSaga from './cookDetail.saga';
 import { commentsSaga } from './comments.saga';
 import watchLikeCook from './likeCook.saga';
-
+import likesSaga from './like.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.

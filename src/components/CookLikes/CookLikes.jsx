@@ -1,35 +1,35 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import './CookLikesPage.css'; /
-import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+// import './CookLikesPage.css';
 
 function CookLikesPage() {
   const dispatch = useDispatch();
-  const likedCooks = useSelector((store) => store.feedReducer); // Assuming you have a reducer for liked cooks
-  const history = useHistory();
+  const { cookId } = useParams();
+  const likedUsers = useSelector((store) => store.likesReducer);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_LIKED_COOKS' }); // Dispatch action to fetch liked cooks
-  }, [dispatch]);
-
-  const handleCookClick = (cookId) => {
-    history.push(`/cook/${cookId}`);
-  };
+    dispatch({ type: 'FETCH_LIKED_USERS', payload: cookId });
+  }, [dispatch, cookId]);
 
   return (
-    <div className='container'>
-      <h2 className='my-4'>Liked Cooks</h2>
-      <div className='row'>
-        {likedCooks.map((cook) => (
-          <div key={cook.id} className='col-12 col-md-6 col-lg-4 mb-4'>
-            <div className='card'>
-              <img src={cook.profile_image_url} className='card-img-top' alt='Cook Profile' />
-              <div className='card-body'>
-                <h5 className='card-title'>{cook.cook_name}</h5>
-                <p className='card-text'>{cook.location}</p>
-                <button className='btn btn-primary' onClick={() => handleCookClick(cook.id)}>
-                  View Cook
-                </button>
+    <div className="container-fluid px-0">
+      <h2 className="my-4">Users who liked this cook</h2>
+      <div className="row mx-0">
+        {likedUsers?.map((user) => (
+          <div key={user.user_id} className="col-12 px-0">
+            <div className="card p-3 user-card">
+              <div className="d-flex align-items-center">
+                <img
+                  src={user.profile_image_url}
+                  alt="Profile"
+                  className="profile-image rounded-circle mr-3"
+                />
+                <div>
+                  <p className="mb-1">
+                    <span className="user-name">{user.username}</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>

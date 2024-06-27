@@ -73,7 +73,7 @@ function App() {
             <CookDetailPage />
           </ProtectedRoute>
 
-          <ProtectedRoute exact path='/likes'>
+          <ProtectedRoute exact path='/cook/:cookId/likes'>
             <CookLikesPage />
           </ProtectedRoute>
 

@@ -1,4 +1,4 @@
-// sagas/likesSaga.js
+// This saga is not used
 import { put, takeLatest, all, call } from 'redux-saga/effects';
 import axios from 'axios';
 

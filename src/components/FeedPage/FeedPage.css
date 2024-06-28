@@ -57,7 +57,7 @@ h2 {
 }
 
 /* Mobile-specific styles */
-@media (max-width: 576px) {
+@media (max-width: 600px) {
   .cook-image-small {
     width: calc(50% - 5px);
     max-height: 100px;

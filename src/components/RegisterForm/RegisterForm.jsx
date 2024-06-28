@@ -28,11 +28,11 @@ function RegisterForm() {
             {errors.registrationMessage}
           </h3>
         )}
-        <div>
+        <center>
           <label htmlFor='username'>
             Username:
             <input
-            className='username'
+              className='username'
               type='text'
               name='username'
               value={username}
@@ -40,12 +40,12 @@ function RegisterForm() {
               onChange={(event) => setUsername(event.target.value)}
             />
           </label>
-        </div>
-        <div>
+        </center>
+        <center>
           <label htmlFor='password'>
             Password:
             <input
-            className='password'
+              className='password'
               type='password'
               name='password'
               value={password}
@@ -53,9 +53,11 @@ function RegisterForm() {
               onChange={(event) => setPassword(event.target.value)}
             />
           </label>
-        </div>
+        </center>
         <center>
-          <button className='register-btn' type='submit' name='submit'>Register</button>
+          <button className='register-btn' type='submit' name='submit'>
+            Register
+          </button>
         </center>
       </form>
     </div>

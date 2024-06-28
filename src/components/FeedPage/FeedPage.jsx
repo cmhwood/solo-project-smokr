@@ -11,11 +11,12 @@ function FeedPage() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_COOKS' });
+    window.scrollTo(0, 0);
   }, [dispatch]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   const handleCookClick = (cookId) => {
     history.push(`/cook/${cookId}`);

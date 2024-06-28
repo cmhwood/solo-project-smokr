@@ -11,6 +11,8 @@ h3 {
   padding: 16px;
   background-color: #172727;
   margin-bottom: 10px;
+  max-width: 600px;
+  margin: auto;
 }
 
 .view-details label {
@@ -88,7 +90,7 @@ h3 {
   object-fit: cover;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 600px) {
   .view-details input,
   .view-details select,
   .view-details textarea {

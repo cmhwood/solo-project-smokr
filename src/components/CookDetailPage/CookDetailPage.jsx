@@ -31,11 +31,12 @@ function CookDetails() {
   useEffect(() => {
     fetchCookDetails();
     fetchComments();
-  }, []);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   const fetchCookDetails = async () => {
     try {

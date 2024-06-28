@@ -10,19 +10,20 @@ const CooksPage = () => {
   const cookRatings = useSelector((store) => store.cookRatings);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_COOKS' }); // Fetch cooks when component mounts
+    dispatch({ type: 'FETCH_COOKS' });
+    window.scrollTo(0, 0);
   }, [dispatch]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   const handleCookClick = (cookId) => {
-    history.push(`/cook/${cookId}`); // Navigate to cook details page
+    history.push(`/cook/${cookId}`);
   };
 
   const handleCreateNewCook = () => {
-    history.push('/cooks/new'); // Navigate to create new cook page
+    history.push('/cooks/new');
   };
 
   return (

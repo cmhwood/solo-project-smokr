@@ -158,6 +158,7 @@ function CookDetails() {
 
   const handleEditToggle = () => {
     setEditMode(!editMode);
+    window.scrollTo(0, 0);
   };
 
   const handleFormDataChange = (e) => {

@@ -67,7 +67,7 @@ Features
 - Express
 - Node
 - Passport
-  (a full list of dependencies can be found in `package.json`)
+- (a full list of dependencies can be found in `package.json`)
 
 ## Acknowledgement
 

@@ -1,4 +1,11 @@
-# Prime Solo Project - Starting Repo
+# Smokr
+
+## Description
+
+Duration: 2 week sprint
+
+Welcome to the Smokr App, the ultimate platform for BBQ lovers and smoking enthusiasts! My app is designed to unite a community of passionate grillers, allowing you to share your culinary creations, learn from others, and elevate your grilling game.
+
 
 This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
 

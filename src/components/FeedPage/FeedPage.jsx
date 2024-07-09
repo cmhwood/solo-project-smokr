@@ -29,7 +29,7 @@ function FeedPage() {
 
   return (
     <div className='container-fluid px-0'>
-      <h2 className='my-4'>What's Cookin'</h2>
+      <h2 className='my-4'>Smokr</h2>
       <div className='row mx-0'>
         {feeds?.map((cook) => (
           <div key={cook.id} className='col-12 px-0'>

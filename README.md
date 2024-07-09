@@ -6,6 +6,10 @@ Duration: 2 week sprint
 
 Welcome to the Smokr App, the ultimate platform for BBQ lovers and smoking enthusiasts! My app is designed to unite a community of passionate grillers, allowing you to share your culinary creations, learn from others, and elevate your grilling game.
 
+## Screenshots
+<img width="306" alt="Screenshot 2024-07-08 at 9 01 05 PM" src="https://github.com/cmhwood/solo-project-smokr/assets/160754329/a0259cbf-8446-4456-b2b7-4b704326f643">
+<img width="304" alt="Screenshot 2024-07-08 at 9 01 33 PM" src="https://github.com/cmhwood/solo-project-smokr/assets/160754329/a717ebef-53af-46b2-82bf-7178bd506c95">
+
 
 This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
 
